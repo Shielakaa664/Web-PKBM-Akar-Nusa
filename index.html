@@ -1,0 +1,2390 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PKBM AKAR NUSA PANINGGARAN - Website Pengenalan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== STYLE UNTUK FORM WHATSAPP ===== */
+        .whatsapp-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 15px 30px;
+            transition: all 0.3s;
+        }
+
+        .whatsapp-btn:hover {
+            background: #128C7E !important;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-btn i {
+            font-size: 1.3rem;
+        }
+
+        /* Validasi form */
+        input:invalid, textarea:invalid {
+            border-color: #f59e0b !important;
+        }
+
+        input:valid, textarea:valid {
+            border-color: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        /* Notifikasi Alert */
+        .alert-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 9999;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s ease;
+            max-width: 400px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+        }
+
+        .alert-warning {
+            background: linear-gradient(135deg, #f59e0b, #e67e22);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        /* ===== STYLE UNTUK UPLOAD FOTO ===== */
+        .upload-section {
+            background-color: #f8f9fa;
+            padding: 80px 0;
+            margin-top: 50px;
+            border-top: 1px solid #e9ecef;
+            position: relative;
+        }
+
+        .upload-section.locked::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(3px);
+            z-index: 1;
+        }
+
+        .lock-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .lock-icon {
+            font-size: 4rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        .upload-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .upload-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .upload-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .upload-input {
+            padding: 15px;
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .upload-input:hover {
+            border-color: var(--secondary-color);
+            background: #e9f7fe;
+        }
+
+        .upload-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .preview-item {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .preview-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(220, 53, 69, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        .upload-btn {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .upload-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .upload-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .gallery-caption {
+            padding: 15px;
+            background: white;
+        }
+
+        .gallery-caption h4 {
+            margin: 0 0 5px 0;
+            color: var(--primary-color);
+            font-size: 1.1rem; /* DIKECILKAN */
+        }
+
+        .gallery-caption p {
+            font-size: 0.9rem; /* DIKECILKAN */
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* Gallery Filter */
+        .gallery-filter {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            background: white;
+            border: 2px solid var(--secondary-color);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.9rem; /* DIKECILKAN */
+        }
+
+        .filter-btn.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .filter-btn:hover {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        /* Reset dan Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #3b82f6;
+            --accent-color: #f59e0b;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --text-color: #334155;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-color);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header dan Navigasi */
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            min-height: 80px;
+        }
+        
+        header.scrolled {
+            padding: 10px 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)), 
+                        url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 12px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .logo:hover i {
+            transform: rotate(15deg);
+            background-color: rgba(255, 255, 255, 0.25);
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            letter-spacing: 1px;
+            margin-bottom: 3px;
+        }
+        
+        .logo p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            padding: 8px 15px;
+            border-radius: 5px;
+            position: relative;
+            font-size: 0.95rem; /* DIKECILKAN */
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: all 0.3s;
+            transform: translateX(-50%);
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .nav-links a:hover::after {
+            width: 80%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 2;
+            padding: 5px;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Hero Section - Selamat Datang dengan Background Foto yang Sesuai */
+        .hero {
+            padding: 100px 0 120px;
+            background: linear-gradient(rgba(30, 58, 138, 0.85), rgba(59, 130, 246, 0.75)), 
+                        url('logo akarnusa.jpeg');
+            background-size: 250px cover;
+            background-position: center center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 20%, rgba(0, 0, 0, 0.3) 100%);
+        }
+        
+        .hero .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+        
+        .hero h2 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            margin-bottom: 25px;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+            animation: fadeInDown 1s ease-out;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            max-width: 750px;
+            margin: 0 auto 40px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease-out 0.3s both;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+            padding: 15px 35px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            animation: fadeIn 1s ease-out 0.6s both;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
+        }
+        
+        .btn:hover {
+            background-color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        /* Section Umum */
+        section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            color: var(--primary-color);
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem); /* DIKECILKAN */
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px; /* DIKECILKAN */
+            height: 3px; /* DIKECILKAN */
+            background-color: var(--accent-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .section-title p {
+            font-size: 1rem; /* DIKECILKAN */
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Tentang Sekolah - DIUBAH: Gambar diperbesar */
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px; /* DIPERBESAR */
+            align-items: center;
+        }
+        
+        .about-img {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            transition: transform 0.5s;
+            max-height: 500px; /* DIPERBESAR */
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .about-img img {
+            width: 100%;
+            height: auto;
+            object-fit: contain; /* DIPERTAHANKAN */
+            display: block;
+            transition: transform 0.5s;
+            max-height: 450px; /* DIPERBESAR */
+            max-width: 500px; /* DIPERBESAR */
+            margin: 0 auto;
+        }
+        
+        .about-img:hover {
+            transform: translateY(-10px);
+        }
+        
+        .about-img:hover img {
+            transform: scale(1.05);
+        }
+        
+        .about-text h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px; /* DIKECILKAN */
+            font-size: clamp(1.3rem, 2.5vw, 1.6rem); /* DIKECILKAN */
+        }
+        
+        .about-text p, .about-text li {
+            font-size: 1rem; /* DIKECILKAN */
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .about-text ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .about-text li {
+            margin-bottom: 10px;
+        }
+        
+        /* Fasilitas */
+        .facilities {
+            background-color: #f1f5f9;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .facilities::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.03;
+            z-index: 0;
+        }
+        
+        .facilities .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .facilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px; /* DIKECILKAN */
+        }
+        
+        .facility-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px 25px; /* DIKECILKAN */
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+        }
+        
+        .facility-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px; /* DIKECILKAN */
+            background-color: var(--secondary-color);
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+        
+        .facility-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .facility-card:hover {
+            transform: translateY(-12px); /* DIKECILKAN */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        .facility-icon {
+            background-color: var(--secondary-color);
+            color: white;
+            width: 70px; /* DIKECILKAN */
+            height: 70px; /* DIKECILKAN */
+            line-height: 70px; /* DIKECILKAN */
+            border-radius: 50%;
+            margin: 0 auto 20px; /* DIKECILKAN */
+            font-size: 1.8rem; /* DIKECILKAN */
+            transition: all 0.4s;
+        }
+        
+        .facility-card:hover .facility-icon {
+            background-color: var(--accent-color);
+            transform: rotateY(180deg);
+        }
+        
+        .facility-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px; /* DIKECILKAN */
+            font-size: 1.3rem; /* DIKECILKAN */
+        }
+        
+        .facility-card p {
+            font-size: 0.95rem; /* DIKECILKAN */
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        /* Ekstrakurikuler */
+        .extracurricular-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px; /* DIKECILKAN */
+        }
+        
+        .extracurricular-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s;
+            height: 100%;
+        }
+        
+        .extracurricular-card:hover {
+            transform: translateY(-8px); /* DIKECILKAN */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        .extracurricular-img {
+            height: 200px; /* DIKECILKAN */
+            overflow: hidden;
+        }
+        
+        .extracurricular-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .extracurricular-card:hover .extracurricular-img img {
+            transform: scale(1.1);
+        }
+        
+        .extracurricular-info {
+            padding: 20px; /* DIKECILKAN */
+        }
+        
+        .extracurricular-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 12px; /* DIKECILKAN */
+            font-size: 1.3rem; /* DIKECILKAN */
+        }
+        
+        .extracurricular-info p {
+            font-size: 0.95rem; /* DIKECILKAN */
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        /* Kontak */
+        .contact {
+            background-color: var(--dark-color);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.05;
+            z-index: 0;
+        }
+        
+        .contact .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px; /* DIKECILKAN */
+        }
+        
+        .contact-info h3 {
+            margin-bottom: 20px; /* DIKECILKAN */
+            color: var(--accent-color);
+            font-size: 1.6rem; /* DIKECILKAN */
+        }
+        
+        .contact-detail {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 18px; /* DIKECILKAN */
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .contact-detail:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .contact-detail i {
+            color: var(--accent-color);
+            margin-right: 15px; /* DIKECILKAN */
+            margin-top: 5px;
+            font-size: 1.2rem; /* DIKECILKAN */
+        }
+        
+        .contact-detail h4 {
+            font-size: 1.1rem; /* DIKECILKAN */
+            margin-bottom: 5px;
+        }
+        
+        .contact-detail p {
+            font-size: 0.95rem; /* DIKECILKAN */
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 14px; /* DIKECILKAN */
+            margin-bottom: 20px; /* DIKECILKAN */
+            border: none;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 2px var(--accent-color);
+        }
+        
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 0 20px; /* DIKECILKAN */
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1524178234883-043d5c3f3cf4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.05;
+            z-index: 0;
+        }
+        
+        footer .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px; /* DIKECILKAN */
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 20px; /* DIKECILKAN */
+            margin: 20px 0; /* DIKECILKAN */
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.6rem; /* DIKECILKAN */
+            transition: all 0.3s;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 45px; /* DIKECILKAN */
+            height: 45px; /* DIKECILKAN */
+            line-height: 45px; /* DIKECILKAN */
+            border-radius: 50%;
+            display: inline-block;
+        }
+        
+        .social-icons a:hover {
+            color: var(--accent-color);
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding-top: 20px; /* DIKECILKAN */
+            font-size: 0.9rem; /* DIKECILKAN */
+            opacity: 0.8;
+        }
+        
+        /* ADMIN MODE */
+        .admin-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #f59e0b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .admin-btn:hover {
+            background: #e67e22;
+            transform: scale(1.1);
+        }
+
+        .admin-indicator {
+            position: fixed;
+            top: 15px;
+            right: 80px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 3px 10px rgba(37, 211, 102, 0.3);
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .delete-btn:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+
+        .delete-btn i {
+            margin-right: 5px;
+        }
+        
+        /* Responsif */
+        @media (max-width: 1200px) {
+            .hero {
+                padding: 150px 0 100px;
+                min-height: 90vh;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .hero {
+                padding: 140px 0 90px;
+                min-height: 80vh;
+                background-attachment: scroll;
+            }
+            
+            .hero h2 {
+                font-size: clamp(1.8rem, 4vw, 2.8rem);
+            }
+            
+            .section-title h2 {
+                font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            }
+            
+            .about-img img {
+                max-height: 400px; /* DIPERBESAR untuk tablet */
+                max-width: 450px; /* DIPERBESAR untuk tablet */
+            }
+
+            .admin-indicator {
+                top: 10px;
+                right: 70px;
+                font-size: 0.7rem;
+                padding: 4px 10px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                background-attachment: scroll;
+                min-height: 70px;
+            }
+            
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: rgba(0, 0, 0, 0.95);
+                padding: 20px; /* DIKECILKAN */
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+                z-index: 1001;
+                gap: 0;
+            }
+            
+            .nav-links li {
+                margin-bottom: 12px; /* DIKECILKAN */
+            }
+            
+            .nav-links li:last-child {
+                margin-bottom: 0;
+            }
+            
+            .nav-links a {
+                display: block;
+                padding: 10px 15px; /* DIKECILKAN */
+                border-radius: 5px;
+                background-color: rgba(255, 255, 255, 0.05);
+                font-size: 0.9rem; /* DIKECILKAN */
+            }
+            
+            .nav-links a:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero {
+                padding: 130px 0 80px;
+                min-height: 70vh;
+                background-attachment: scroll;
+            }
+            
+            .hero h2 {
+                font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+            }
+            
+            .hero p {
+                font-size: clamp(0.9rem, 2.2vw, 1.1rem);
+            }
+            
+            section {
+                padding: 80px 0; /* DIKECILKAN */
+            }
+            
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+            
+            .logo i {
+                font-size: 2rem;
+                padding: 10px;
+            }
+
+            .upload-container {
+                padding: 20px;
+            }
+            
+            .preview-item {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .gallery-caption h4 {
+                font-size: 1rem; /* DIKECILKAN untuk mobile */
+            }
+            
+            .gallery-caption p {
+                font-size: 0.85rem; /* DIKECILKAN untuk mobile */
+            }
+            
+            .about-img {
+                max-height: 400px; /* DIPERBESAR untuk mobile */
+            }
+            
+            .about-img img {
+                max-height: 350px; /* DIPERBESAR untuk mobile */
+                max-width: 400px; /* DIPERBESAR untuk mobile */
+            }
+
+            .admin-indicator {
+                display: none; /* Sembunyikan di mobile */
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                padding: 120px 0 70px;
+                min-height: 60vh;
+            }
+            
+            .hero h2 {
+                font-size: clamp(1.4rem, 3vw, 2rem);
+                margin-bottom: 20px;
+            }
+            
+            .hero p {
+                font-size: clamp(0.85rem, 2vw, 1rem);
+                margin-bottom: 30px;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                font-size: 0.95rem;
+            }
+            
+            .logo h1 {
+                font-size: 1.3rem;
+            }
+            
+            .logo p {
+                font-size: 0.8rem;
+            }
+            
+            .logo i {
+                font-size: 1.8rem;
+            }
+            
+            .about-img {
+                max-height: 350px; /* DIPERBESAR untuk mobile kecil */
+            }
+            
+            .about-img img {
+                max-height: 300px; /* DIPERBESAR untuk mobile kecil */
+                max-width: 350px; /* DIPERBESAR untuk mobile kecil */
+            }
+
+            .gallery-filter {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .filter-btn {
+                width: 100%;
+                max-width: 200px;
+                padding: 6px 15px; /* DIKECILKAN untuk mobile */
+                font-size: 0.85rem; /* DIKECILKAN untuk mobile */
+            }
+            
+            .section-title {
+                margin-bottom: 40px; /* DIKECILKAN untuk mobile */
+            }
+            
+            .facility-card, .extracurricular-card {
+                padding: 25px 20px; /* DIKECILKAN untuk mobile */
+            }
+            
+            .facility-icon {
+                width: 60px; /* DIKECILKAN untuk mobile */
+                height: 60px; /* DIKECILKAN untuk mobile */
+                line-height: 60px; /* DIKECILKAN untuk mobile */
+                font-size: 1.5rem; /* DIKECILKAN untuk mobile */
+            }
+
+            .lock-overlay {
+                padding: 20px;
+            }
+
+            .lock-icon {
+                font-size: 3rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                padding: 110px 0 60px;
+                min-height: 50vh;
+            }
+            
+            .hero h2 {
+                font-size: 1.6rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.6rem;
+            }
+            
+            .section-title p {
+                font-size: 0.9rem; /* DIKECILKAN untuk mobile kecil */
+            }
+            
+            .about-img {
+                max-height: 300px; /* DIPERBESAR untuk mobile sangat kecil */
+            }
+            
+            .about-img img {
+                max-height: 250px; /* DIPERBESAR untuk mobile sangat kecil */
+                max-width: 300px; /* DIPERBESAR untuk mobile sangat kecil */
+            }
+
+            .admin-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+        
+        /* Fix untuk background yang terlalu besar */
+        @media (min-width: 1920px) {
+            .hero {
+                background-size: 100% auto;
+                background-position: center top;
+            }
+            
+            header, header.scrolled {
+                background-size: 100% auto;
+                background-position: center top;
+            }
+        }
+    </style>
+</head>
+
+<!-- MODAL LOGIN ADMIN -->
+<div id="adminLoginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center;">
+    <div style="background: white; padding: 30px; border-radius: 10px; width: 90%; max-width: 400px; position: relative;">
+        <button onclick="closeAdminModal()" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666;">&times;</button>
+        <h3 style="text-align: center; margin-bottom: 20px; color: var(--primary-color);">
+            <i class="fas fa-lock"></i> Login Admin
+        </h3>
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; color: var(--primary-color);">Username</label>
+            <input type="text" id="adminUsername" placeholder="Masukkan username" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;">
+        </div>
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: 600; color: var(--primary-color);">Password</label>
+            <input type="password" id="adminPassword" placeholder="Masukkan password" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;">
+        </div>
+        <button onclick="loginAdmin()" style="width: 100%; padding: 12px; background: var(--primary-color); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: 600;">
+            <i class="fas fa-sign-in-alt"></i> Login
+        </button>
+        <div style="margin-top: 15px; text-align: center; color: #666; font-size: 0.9rem;">
+            <p><strong>Info:</strong> Hanya admin yang dapat mengupload dan menghapus foto.</p>
+            <p style="font-size: 0.8rem; color: #999; margin-top: 10px;">
+                <i class="fas fa-info-circle"></i> Hubungi administrator untuk mendapatkan akses.
+            </p>
+        </div>
+    </div>
+</div>
+
+<body>
+    <!-- Header & Navigasi -->
+    <header id="mainHeader">
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <div class="logo-text">
+                    <h1>PKBM AKAR NUSA</h1>
+                    <p>Mendidik Generasi Unggul</p>
+                </div>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#about">Tentang</a></li>
+                <li><a href="#facilities">Fasilitas</a></li>
+                <li><a href="#extracurricular">Prestasi</a></li>
+                <li><a href="#gallery">Galeri</a></li>
+                <li><a href="#upload">Upload Foto</a></li>
+                <li><a href="#contact">Kontak</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section - Selamat Datang -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h2>Selamat Datang di PKBM AKAR NUSA PANINGGARAN</h2>
+            <p>Membentuk generasi unggul, berkarakter, dan berprestasi melalui pendidikan berkualitas yang menginspirasi dan mempersiapkan siswa untuk menghadapi masa depan.</p>
+            <a href="#about" class="btn">Pelajari Lebih Lanjut</a>
+        </div>
+    </section>
+
+    <!-- Tentang Sekolah -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Tentang Sekolah Kami</h2>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-img">
+                    <img src="visi misi.jpeg" alt="Gedung Sekolah">
+                </div>
+                
+                <div class="about-text">
+                    <h3>Visi dan Misi Pendidikan</h3>
+                    <p>visi kami adalah "Bergandeng Tangan Perangi Kebodohan". </p>
+                    <p>Misi kami adalah:</p>
+                    <ul>
+                        <li>Menanamkan minat belajar dan terus belajar kepada masyarakat.</li>
+                        <li>Meningkatkan kesejahteraan masyarakat melalui peningkatan keterampilan.</li>
+                        <li>Membangun masyarakat yang cerdas, berkualitas dengan bekal ilmu dan keterampilan.</li>
+                        <li>Mengurangi kegiatan yang bersifat negatif, dengan mengisi waktu untuk belajar hal yang positif dan bermanfaat.</li>
+                        <li>Mengembangkan minat masyarakat akan budaya membaca dan tradisi literasi sebagai upaya menangkal informasi hoak, dan keterbelakangan informasi ditengah arus teknologi informasi global.</li>
+                    </ul>
+                    <p>Kami memiliki tim pengajar yang berkualifikasi dan berpengalaman, kurikulum yang mengikuti perkembangan zaman, serta fasilitas pendukung yang lengkap untuk menunjang proses belajar mengajar.</p>
+                    <a href="#contact" class="btn">Hubungi Kami</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fasilitas -->
+    <section class="facilities" id="facilities">
+        <div class="container">
+            <div class="section-title">
+                <h2>Fasilitas Sekolah</h2>
+            </div>
+            
+            <div class="facilities-grid">
+                <div class="facility-card">
+                    <div class="facility-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Gedung sekolah</h3>
+                    <p>Ruang kelas yang layak huni dan memadai</p>
+                </div>
+                
+                <div class="facility-card">
+                    <div class="facility-icon">
+                        <i class="fas fa-futbol"></i>
+                    </div>
+                    <h3>Lapangan Olahraga</h3>
+                    <p>Lapangan sepak bola untuk mendukung kegiatan olahraga dan kesehatan siswa.</p>
+                </div>
+                
+                <div class="facility-card">
+                    <div class="facility-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h3>Pendidikan</h3>
+                    <p>Kelas dilengkapi dengan proyektor, komputer, dan akses internet cepat untuk pembelajaran berbasis teknologi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ekstrakurikuler -->
+    <section id="extracurricular">
+        <div class="container">
+            <div class="section-title">
+                <h2>PRESTASI</h2>
+            </div>
+            
+            <div class="extracurricular-grid">
+                <div class="extracurricular-card">
+                    <div class="extracurricular-img">
+                        <img src="PRAMUKA.jpeg" alt="Olahraga">
+                    </div>
+                    <div class="extracurricular-info">
+                        <h3>Kepramukaan</h3>
+                        <p>Mencetak siswa berprestasi di berbagai kejuaraan.</p>
+                    </div>
+                </div>
+                
+                <div class="extracurricular-card">
+                    <div class="extracurricular-img">
+                        <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Seni dan Musik">
+                    </div>
+                    <div class="extracurricular-info">
+                        <h3>Seni dan Musik</h3>
+                        <p>Paduan suara, band sekolah, teater, seni lukis, dan tari. Mengembangkan kreativitas siswa.</p>
+                    </div>
+                </div>
+                
+                <div class="extracurricular-card">
+                    <div class="extracurricular-img">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Teknologi">
+                    </div>
+                    <div class="extracurricular-info">
+                        <h3>Teknologi dan Robotik</h3>
+                        <p>Pemrograman, robotik, dan inovasi digital. Mempersiapkan siswa untuk era revolusi industri 4.0.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeri Foto -->
+    <section id="gallery" class="gallery-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Galeri Foto</h2>
+                <p>Kumpulan foto kegiatan sekolah</p>
+            </div>
+            
+            <!-- Filter Kategori - HANYA 2 KATEGORI -->
+            <div class="gallery-filter" id="galleryFilter">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="kegiatan">Kegiatan</button>
+                <button class="filter-btn" data-filter="prestasi">Prestasi</button>
+            </div>
+            
+            <!-- Grid Galeri -->
+            <div class="gallery-grid" id="photoGallery">
+                <!-- Foto akan ditambahkan secara dinamis dari JavaScript -->
+            </div>
+            
+            <!-- Tombol Tampilkan Lebih Banyak -->
+            <div style="text-align: center; margin-top: 40px;">
+                <button id="loadMoreBtn" class="btn" style="display: none;">
+                    <i class="fas fa-plus"></i> Tampilkan Lebih Banyak
+                </button>
+                <p id="noMorePhotos" style="display: none; color: #666; font-style: italic;">
+                    Tidak ada foto lagi untuk ditampilkan.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upload Foto Section -->
+    <section id="upload" class="upload-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Upload Foto Baru</h2>
+                <p>Tambah foto kegiatan sekolah Anda</p>
+            </div>
+            
+            <div class="upload-container">
+                <form id="uploadForm" class="upload-form">
+                    <div class="upload-group">
+                        <label class="upload-label">Judul Foto</label>
+                        <input type="text" id="photoTitle" placeholder="Contoh: Kegiatan Pramuka 2024" required>
+                    </div>
+                    
+                    <div class="upload-group">
+                        <label class="upload-label">Kategori</label>
+                        <select id="photoCategory" class="upload-input" required>
+                            <option value="">Pilih Kategori</option>
+                            <option value="kegiatan">Kegiatan Sekolah</option>
+                            <option value="prestasi">Prestasi</option>
+                            <option value="lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    
+                    <div class="upload-group">
+                        <label class="upload-label">Deskripsi</label>
+                        <textarea id="photoDescription" rows="3" placeholder="Deskripsi singkat tentang foto..." required></textarea>
+                    </div>
+                    
+                    <div class="upload-group">
+                        <label class="upload-label">Pilih Foto</label>
+                        <input type="file" id="photoInput" accept="image/*" multiple class="upload-input" required>
+                        <small style="color: #666;">Pilih satu atau beberapa foto (JPEG, PNG, JPG, maksimal 5MB per foto)</small>
+                    </div>
+                    
+                    <div class="upload-preview" id="imagePreview">
+                        <!-- Preview gambar akan muncul di sini -->
+                    </div>
+                    
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                        <button type="button" onclick="uploadPhotos()" class="upload-btn" id="uploadBtn">
+                            <i class="fas fa-cloud-upload-alt"></i> Upload Foto
+                        </button>
+                        <button type="button" onclick="clearUploadForm()" class="btn" style="background: #6c757d;">
+                            <i class="fas fa-times"></i> Batal
+                        </button>
+                    </div>
+                    
+                    <div id="uploadProgress" style="display: none; margin-top: 20px;">
+                        <div style="width: 100%; background: #e9ecef; height: 20px; border-radius: 10px; overflow: hidden;">
+                            <div id="progressBar" style="width: 0%; height: 100%; background: var(--secondary-color); transition: width 0.3s;"></div>
+                        </div>
+                        <p id="progressText" style="text-align: center; margin-top: 5px; font-size: 0.9rem;"></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kontak -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Hubungi Kami</h2>
+            </div>
+            
+            <div class="contact-container">
+                <!-- Informasi Kontak -->
+                <div class="contact-info">
+                    <h3>Informasi Kontak</h3>
+                    <div class="contact-detail">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Alamat</h4>
+                            <p>Jl. Paninggaran KM 1 Ds. Paninggaran Kec. Paninggaran Kab. Pekalongan kode pos 5116</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-detail">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Telepon/WhatsApp</h4>
+                            <p>0852-9088-9298</p>
+                            <small style="color: #f59e0b; font-weight: 500;">
+                                <i class="fab fa-whatsapp"></i> Klik tombol hijau di bawah untuk chat langsung
+                            </small>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-detail">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>akarnusapaninggaran@gmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-detail">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Jam Operasional</h4>
+                            <p>Selasa - Kamis: 07.00 - 16.00 WIB</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Tombol WhatsApp Langsung -->
+                    <div style="margin-top: 30px; text-align: center;">
+                        <a href="https://wa.me/6285290889298?text=Halo%20PKBM%20AKAR%20NUSA%20Paninggaran,%20saya%20ingin%20bertanya%20tentang:" 
+                           class="btn" 
+                           style="background: #25D366; display: inline-flex; align-items: center; gap: 10px;"
+                           target="_blank">
+                            <i class="fab fa-whatsapp"></i> Chat Langsung via WhatsApp
+                        </a>
+                        <p style="margin-top: 10px; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                            Klik untuk chat langsung tanpa mengisi form
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Form WhatsApp -->
+                <div class="contact-form">
+                    <h3>Kirim Pesan via WhatsApp</h3>
+                    <p style="margin-bottom: 20px; color: #ccc; font-size: 0.9rem;">
+                        Isi form di bawah, pesan akan langsung terbuka di WhatsApp.
+                    </p>
+                    
+                    <form id="messageForm">
+                        <input type="text" id="nama" placeholder="Nama Lengkap *" required>
+                        <input type="email" id="email" placeholder="Email *" required>
+                        <input type="text" id="subjek" placeholder="Subjek Pesan *" required>
+                        <textarea id="pesan" rows="5" placeholder="Pesan Anda *" required></textarea>
+                        
+                        <button type="button" onclick="sendToWhatsApp()" class="btn whatsapp-btn" style="background: #25D366; width: 100%;">
+                            <i class="fab fa-whatsapp"></i> Kirim via WhatsApp
+                        </button>
+                        
+                        <p style="margin-top: 15px; font-size: 0.85rem; color: #aaa; text-align: center;">
+                            <i class="fas fa-info-circle"></i> Pastikan WhatsApp sudah terinstal
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <div class="logo-text">
+                        <h2>PKBM AKAR NUSA PANINGGARAN</h2>
+                        <p>Membentuk Generasi Unggul untuk Masa Depan Gemilang</p>
+                    </div>
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; <span id="currentYear"></span> PKBM AKAR NUSA PANINGGARAN. Semua Hak Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // ============================================
+        // VARIABEL GLOBAL UNTUK MENYIMPAN FOTO
+        // ============================================
+        let uploadedPhotos = JSON.parse(localStorage.getItem('pkbmPhotos')) || [
+            {
+                id: 1,
+                title: "Kegiatan Pramuka",
+                description: "Siswa sedang mengikuti kegiatan kepramukaan",
+                category: "kegiatan",
+                url: "PRAMUKA.jpeg",
+                date: "2024-03-15",
+                likes: 0
+            },
+            {
+                id: 2,
+                title: "Prestasi Seni",
+                description: "Pertunjukan seni dan musik siswa",
+                category: "prestasi",
+                url: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
+                date: "2024-02-20",
+                likes: 0
+            },
+            {
+                id: 3,
+                title: "Kegiatan Olahraga",
+                description: "Turnamen sepak bola antar kelas",
+                category: "kegiatan",
+                url: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
+                date: "2023-11-05",
+                likes: 0
+            }
+        ];
+
+        // Variabel untuk pagination
+        let currentFilter = 'all';
+        let visibleCount = 6;
+        const photosPerLoad = 6;
+
+        // ============================================
+        // VARIABEL DAN FUNGSI ADMIN
+        // ============================================
+        let isAdmin = false;
+        const ADMIN_USERNAME = "admin";
+        const ADMIN_PASSWORD = "admin123"; // Password disembunyikan
+        
+        // ============================================
+        // FUNGSI ADMIN: LOGIN, LOGOUT, AKSES
+        // ============================================
+        
+        // Fungsi untuk menampilkan modal login
+        function showAdminLogin() {
+            // Kosongkan input fields
+            document.getElementById('adminUsername').value = '';
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('adminLoginModal').style.display = 'flex';
+        }
+        
+        // Fungsi untuk menutup modal login
+        function closeAdminModal() {
+            document.getElementById('adminLoginModal').style.display = 'none';
+        }
+        
+        // Fungsi untuk login admin
+        function loginAdmin() {
+            const username = document.getElementById('adminUsername').value.trim();
+            const password = document.getElementById('adminPassword').value.trim();
+            
+            if (!username || !password) {
+                showAlert('warning', 'Harap isi username dan password!');
+                return;
+            }
+            
+            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+                isAdmin = true;
+                closeAdminModal();
+                
+                // Tampilkan indikator admin
+                document.getElementById('adminIndicator').style.display = 'flex';
+                
+                // Ubah tombol admin
+                document.getElementById('adminBtn').innerHTML = '👑';
+                document.getElementById('adminBtn').title = 'Logout Admin';
+                
+                // Unlock upload section
+                unlockUploadSection();
+                
+                // Reload galeri untuk menampilkan tombol hapus
+                loadGallery(currentFilter);
+                
+                // Simpan status login
+                localStorage.setItem('adminLoggedIn', 'true');
+                
+                showAlert('success', 'Login admin berhasil! Anda sekarang dapat mengupload dan menghapus foto.');
+            } else {
+                showAlert('warning', 'Username atau password salah!');
+                // Kosongkan password field untuk keamanan
+                document.getElementById('adminPassword').value = '';
+            }
+        }
+        
+        // Fungsi untuk logout admin
+        function logoutAdmin() {
+            if (confirm('Logout dari mode admin?')) {
+                isAdmin = false;
+                
+                // Sembunyikan indikator admin
+                document.getElementById('adminIndicator').style.display = 'none';
+                
+                // Ubah tombol admin
+                document.getElementById('adminBtn').innerHTML = '🔐';
+                document.getElementById('adminBtn').title = 'Admin Mode';
+                
+                // Lock upload section
+                lockUploadSection();
+                
+                // Reload galeri untuk menghilangkan tombol hapus
+                loadGallery(currentFilter);
+                
+                // Hapus status login
+                localStorage.removeItem('adminLoggedIn');
+                
+                showAlert('info', 'Anda telah logout dari mode admin.');
+            }
+        }
+        
+        // Fungsi lock/unlock upload section
+        function lockUploadSection() {
+            const uploadSection = document.getElementById('upload');
+            uploadSection.classList.add('locked');
+            
+            // Hapus overlay lama jika ada
+            const oldOverlay = uploadSection.querySelector('.lock-overlay');
+            if (oldOverlay) oldOverlay.remove();
+            
+            // Tambah overlay baru
+            const lockOverlay = document.createElement('div');
+            lockOverlay.className = 'lock-overlay';
+            lockOverlay.innerHTML = `
+                <div class="lock-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3 style="color: var(--primary-color); margin-bottom: 15px;">Akses Terbatas</h3>
+                <p style="color: #666; margin-bottom: 20px;">Hanya admin yang dapat mengupload foto ke galeri.</p>
+                <button onclick="showAdminLogin()" class="btn" style="background: var(--secondary-color);">
+                    <i class="fas fa-key"></i> Login Sebagai Admin
+                </button>
+            `;
+            uploadSection.appendChild(lockOverlay);
+            
+            // Nonaktifkan input upload
+            document.getElementById('photoInput').disabled = true;
+            document.getElementById('uploadBtn').disabled = true;
+            document.getElementById('uploadBtn').innerHTML = '<i class="fas fa-lock"></i> Login untuk Upload';
+        }
+        
+        function unlockUploadSection() {
+            const uploadSection = document.getElementById('upload');
+            uploadSection.classList.remove('locked');
+            
+            // Hapus overlay
+            const lockOverlay = uploadSection.querySelector('.lock-overlay');
+            if (lockOverlay) lockOverlay.remove();
+            
+            // Aktifkan input upload
+            document.getElementById('photoInput').disabled = false;
+            document.getElementById('uploadBtn').disabled = false;
+            document.getElementById('uploadBtn').innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Upload Foto';
+        }
+        
+        // ============================================
+        // FUNGSI UNTUK GALERI FOTO (DENGAN TOMBOL HAPUS)
+        // ============================================
+        function loadGallery(filter = 'all') {
+            const gallery = document.getElementById('photoGallery');
+            gallery.innerHTML = '';
+            
+            // Filter foto berdasarkan kategori
+            let filteredPhotos = uploadedPhotos;
+            if (filter !== 'all') {
+                filteredPhotos = uploadedPhotos.filter(photo => photo.category === filter);
+            }
+            
+            // Tampilkan foto (dibatasi jumlahnya)
+            const photosToShow = filteredPhotos.slice(0, visibleCount);
+            
+            if (photosToShow.length === 0) {
+                gallery.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+                        <i class="fas fa-images" style="font-size: 3rem; color: #ccc; margin-bottom: 20px;"></i>
+                        <p style="color: #666; font-size: 1.1rem;">Belum ada foto untuk kategori ini</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            photosToShow.forEach(photo => {
+                const photoItem = document.createElement('div');
+                photoItem.className = 'gallery-item';
+                photoItem.setAttribute('data-category', photo.category);
+                
+                // Tentukan apakah tombol hapus akan ditampilkan
+                const deleteButton = isAdmin ? `
+                    <div style="text-align: center; margin-top: 10px;">
+                        <button onclick="deletePhoto(${photo.id})" class="delete-btn">
+                            <i class="fas fa-trash"></i> Hapus Foto
+                        </button>
+                    </div>
+                ` : '';
+                
+                photoItem.innerHTML = `
+                    <img src="${photo.url}" alt="${photo.title}" class="gallery-img" 
+                         onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'">
+                    <div class="gallery-caption">
+                        <h4>${photo.title}</h4>
+                        <p>${photo.description}</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                            <span style="background: #e9f7fe; color: var(--secondary-color); padding: 3px 8px; border-radius: 12px; font-size: 0.8rem;">
+                                ${getCategoryLabel(photo.category)}
+                            </span>
+                            <span style="font-size: 0.8rem; color: #666;">
+                                ${formatDate(photo.date)}
+                            </span>
+                        </div>
+                        ${deleteButton}
+                    </div>
+                `;
+                gallery.appendChild(photoItem);
+            });
+            
+            // Tampilkan/sembunyikan tombol "Load More"
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            const noMorePhotos = document.getElementById('noMorePhotos');
+            
+            if (filteredPhotos.length > visibleCount) {
+                loadMoreBtn.style.display = 'inline-block';
+                noMorePhotos.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'none';
+                if (visibleCount > photosPerLoad) {
+                    noMorePhotos.style.display = 'block';
+                }
+            }
+        }
+        
+        // FUNGSI HAPUS FOTO (Hanya untuk admin)
+        function deletePhoto(id) {
+            if (!isAdmin) {
+                showAlert('warning', 'Hanya admin yang bisa menghapus foto!');
+                showAdminLogin();
+                return;
+            }
+            
+            if (confirm('Hapus foto ini?')) {
+                uploadedPhotos = uploadedPhotos.filter(photo => photo.id !== id);
+                localStorage.setItem('pkbmPhotos', JSON.stringify(uploadedPhotos));
+                loadGallery(currentFilter);
+                showAlert('success', 'Foto berhasil dihapus!');
+            }
+        }
+        
+        // ============================================
+        // FUNGSI UNTUK PREVIEW GAMBAR (Dengan cek admin)
+        // ============================================
+        function previewImages() {
+            // Cek apakah user adalah admin
+            if (!isAdmin) {
+                showAlert('warning', 'Hanya admin yang dapat mengupload foto!');
+                showAdminLogin();
+                document.getElementById('photoInput').value = '';
+                return;
+            }
+            
+            const preview = document.getElementById('imagePreview');
+            const files = document.getElementById('photoInput').files;
+            
+            preview.innerHTML = '';
+            
+            if (files) {
+                Array.from(files).forEach((file, index) => {
+                    if (index >= 10) return; // Batasi preview maksimal 10 gambar
+                    
+                    if (file.type.startsWith('image/')) {
+                        // Validasi ukuran file (maksimal 5MB)
+                        if (file.size > 5 * 1024 * 1024) {
+                            showAlert('warning', `File ${file.name} terlalu besar (maksimal 5MB)`);
+                            return;
+                        }
+                        
+                        const reader = new FileReader();
+                        
+                        reader.onload = function(e) {
+                            const previewItem = document.createElement('div');
+                            previewItem.className = 'preview-item';
+                            previewItem.innerHTML = `
+                                <img src="${e.target.result}" class="preview-img" alt="Preview">
+                                <button type="button" class="remove-btn" onclick="this.parentElement.remove();">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            `;
+                            preview.appendChild(previewItem);
+                        }
+                        
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+        }
+        
+        // ============================================
+        // FUNGSI UNTUK UPLOAD FOTO (Hanya untuk admin)
+        // ============================================
+        function uploadPhotos() {
+            // Cek apakah user adalah admin
+            if (!isAdmin) {
+                showAlert('warning', 'Hanya admin yang dapat mengupload foto!');
+                showAdminLogin();
+                return;
+            }
+            
+            const title = document.getElementById('photoTitle').value.trim();
+            const description = document.getElementById('photoDescription').value.trim();
+            const category = document.getElementById('photoCategory').value;
+            const files = document.getElementById('photoInput').files;
+            
+            // Validasi
+            if (!title || !description || !category || files.length === 0) {
+                showAlert('warning', 'Harap isi semua field dan pilih foto!');
+                return;
+            }
+            
+            // Tampilkan progress bar
+            const progressContainer = document.getElementById('uploadProgress');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            
+            progressContainer.style.display = 'block';
+            progressBar.style.width = '0%';
+            progressText.textContent = 'Mempersiapkan upload...';
+            
+            let uploadedCount = 0;
+            const totalFiles = files.length;
+            
+            Array.from(files).forEach((file, index) => {
+                if (file.type.startsWith('image/')) {
+                    // Validasi ukuran file
+                    if (file.size > 5 * 1024 * 1024) {
+                        showAlert('warning', `File ${file.name} terlalu besar (maksimal 5MB)`);
+                        uploadedCount++;
+                        updateProgress(uploadedCount, totalFiles);
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        const newPhoto = {
+                            id: Date.now() + index,
+                            title: totalFiles > 1 ? `${title} (${index + 1})` : title,
+                            description: description,
+                            category: category,
+                            url: e.target.result,
+                            filename: file.name,
+                            date: new Date().toISOString().split('T')[0],
+                            likes: 0,
+                            size: file.size,
+                            uploadedAt: new Date().toLocaleString('id-ID')
+                        };
+                        
+                        uploadedPhotos.unshift(newPhoto);
+                        uploadedCount++;
+                        
+                        // Update progress bar
+                        updateProgress(uploadedCount, totalFiles);
+                        
+                        // Simpan ke localStorage
+                        if (uploadedCount === totalFiles) {
+                            localStorage.setItem('pkbmPhotos', JSON.stringify(uploadedPhotos));
+                            
+                            // Update galeri
+                            loadGallery(currentFilter);
+                            
+                            // Tampilkan notifikasi
+                            setTimeout(() => {
+                                showAlert('success', `Berhasil mengupload ${totalFiles} foto!`);
+                                clearUploadForm();
+                                progressContainer.style.display = 'none';
+                            }, 500);
+                        }
+                    }
+                    
+                    reader.readAsDataURL(file);
+                } else {
+                    uploadedCount++;
+                    updateProgress(uploadedCount, totalFiles);
+                }
+            });
+        }
+        
+        function updateProgress(current, total) {
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            
+            const percentage = Math.round((current / total) * 100);
+            progressBar.style.width = `${percentage}%`;
+            progressText.textContent = `Mengupload ${current} dari ${total} foto (${percentage}%)`;
+        }
+        
+        function clearUploadForm() {
+            document.getElementById('uploadForm').reset();
+            document.getElementById('imagePreview').innerHTML = '';
+            document.getElementById('uploadProgress').style.display = 'none';
+        }
+        
+        // ============================================
+        // FUNGSI BANTUAN
+        // ============================================
+        function getCategoryLabel(category) {
+            const labels = {
+                'kegiatan': 'Kegiatan',
+                'prestasi': 'Prestasi',
+                'lainnya': 'Lainnya'
+            };
+            return labels[category] || category;
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('id-ID', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+        }
+        
+        function showAlert(type, message) {
+            // Hapus notifikasi lama
+            const oldAlert = document.querySelector('.alert-notification');
+            if (oldAlert) oldAlert.remove();
+            
+            // Buat notifikasi baru
+            const alert = document.createElement('div');
+            alert.className = `alert-notification alert-${type}`;
+            alert.innerHTML = `
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(alert);
+            
+            // Hapus otomatis setelah 5 detik
+            setTimeout(() => {
+                alert.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => alert.remove(), 300);
+            }, 5000);
+        }
+        
+        // ============================================
+        // FUNGSI KIRIM WHATSAPP
+        // ============================================
+        function sendToWhatsApp() {
+            const nama = document.getElementById('nama').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const subjek = document.getElementById('subjek').value.trim();
+            const pesan = document.getElementById('pesan').value.trim();
+            
+            // Validasi form
+            if (!nama || !email || !subjek || !pesan) {
+                showAlert('warning', 'Harap isi semua field yang bertanda *');
+                return;
+            }
+            
+            // Validasi email
+            if (!validateEmail(email)) {
+                showAlert('warning', 'Format email tidak valid. Contoh: nama@gmail.com');
+                return;
+            }
+            
+            // Format pesan WhatsApp
+            const text = `*PESAN DARI WEBSITE PKBM AKAR NUSA PANINGGARAN*
+
+📋 *DATA PENGIRIM:*
+• Nama: ${nama}
+• Email: ${email}
+• Subjek: ${subjek}
+
+💬 *ISI PESAN:*
+${pesan}
+
+---
+📱 *Dikirim dari website PKBM AKAR NUSA*
+⏰ *Tanggal: ${new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}*
+🕒 *Waktu: ${new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })} WIB*`;
+            
+            // Encode untuk URL
+            const encodedText = encodeURIComponent(text);
+            
+            // Nomor WhatsApp PKBM
+            const phoneNumber = '6285290889298';
+            
+            // Buat URL WhatsApp
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedText}`;
+            
+            // Tampilkan konfirmasi
+            if (confirm(`Kirim pesan ke WhatsApp PKBM (0852-9088-9298)?\n\nNama: ${nama}\nEmail: ${email}\nSubjek: ${subjek}`)) {
+                // Tampilkan loading
+                const btn = document.querySelector('.whatsapp-btn');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Membuka WhatsApp...';
+                btn.disabled = true;
+                
+                // Buka WhatsApp
+                setTimeout(() => {
+                    window.open(whatsappUrl, '_blank');
+                    
+                    // Tampilkan notifikasi
+                    showAlert('success', 'WhatsApp sedang dibuka... Silakan klik "Kirim" di WhatsApp.');
+                    
+                    // Reset tombol
+                    setTimeout(() => {
+                        btn.innerHTML = originalHTML;
+                        btn.disabled = false;
+                    }, 2000);
+                    
+                    // Reset form (opsional)
+                    setTimeout(() => {
+                        document.getElementById('messageForm').reset();
+                    }, 3000);
+                }, 1000);
+            }
+        }
+        
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        // ============================================
+        // INISIALISASI SAAT HALAMAN DIMUAT
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Buat indikator admin
+            const adminIndicator = document.createElement('div');
+            adminIndicator.id = 'adminIndicator';
+            adminIndicator.className = 'admin-indicator';
+            adminIndicator.innerHTML = '<i class="fas fa-user-shield"></i> Admin Mode';
+            document.body.appendChild(adminIndicator);
+            
+            // Buat tombol admin
+            const adminBtn = document.createElement('button');
+            adminBtn.id = 'adminBtn';
+            adminBtn.className = 'admin-btn';
+            adminBtn.innerHTML = '🔐';
+            adminBtn.title = 'Admin Mode';
+            adminBtn.onclick = function() {
+                if (!isAdmin) {
+                    showAdminLogin();
+                } else {
+                    logoutAdmin();
+                }
+            };
+            document.body.appendChild(adminBtn);
+            
+            // Cek apakah user sudah login sebagai admin
+            if (localStorage.getItem('adminLoggedIn') === 'true') {
+                isAdmin = true;
+                adminIndicator.style.display = 'flex';
+                adminBtn.innerHTML = '👑';
+                adminBtn.title = 'Logout Admin';
+                unlockUploadSection();
+            } else {
+                // Lock upload section untuk user biasa
+                lockUploadSection();
+            }
+            
+            // Load galeri foto
+            loadGallery();
+            
+            // Set tahun di copyright
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Event listener untuk preview gambar
+            document.getElementById('photoInput').addEventListener('change', previewImages);
+            
+            // Event listener untuk filter galeri
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Update class active
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter galeri
+                    currentFilter = this.getAttribute('data-filter');
+                    visibleCount = photosPerLoad;
+                    loadGallery(currentFilter);
+                });
+            });
+            
+            // Event listener untuk load more
+            document.getElementById('loadMoreBtn').addEventListener('click', function() {
+                visibleCount += photosPerLoad;
+                loadGallery(currentFilter);
+            });
+            
+            // Mobile menu
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.getElementById('navLinks');
+            
+            if (mobileMenuBtn && navLinks) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    const icon = this.querySelector('i');
+                    if (icon.classList.contains('fa-bars')) {
+                        icon.classList.replace('fa-bars', 'fa-times');
+                    } else {
+                        icon.classList.replace('fa-times', 'fa-bars');
+                    }
+                });
+                
+                // Tutup menu saat klik link
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                        mobileMenuBtn.querySelector('i').classList.replace('fa-times', 'fa-bars');
+                    });
+                });
+            }
+            
+            // Scroll effect untuk header
+            window.addEventListener('scroll', function() {
+                const header = document.getElementById('mainHeader');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Enter key untuk form WhatsApp
+            document.getElementById('messageForm').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && e.target.type !== 'textarea') {
+                    e.preventDefault();
+                    if (e.target.id === 'pesan') {
+                        sendToWhatsApp();
+                    }
+                }
+            });
+            
+            // Tutup modal admin saat klik di luar
+            document.getElementById('adminLoginModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeAdminModal();
+                }
+            });
+            
+            // Tutup modal dengan tombol ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeAdminModal();
+                }
+            });
+            
+            // Validasi saat user menekan Enter di form login
+            document.getElementById('adminLoginModal').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && (e.target.id === 'adminUsername' || e.target.id === 'adminPassword')) {
+                    loginAdmin();
+                }
+            });
+            
+            console.log("Website PKBM AKAR NUSA siap digunakan!");
+            console.log(`Total foto tersimpan: ${uploadedPhotos.length}`);
+            console.log("Fitur admin aktif! Upload dan hapus hanya untuk admin.");
+            console.log("Info login admin ada di kode JavaScript");
+        });
+    </script>
+</body>
+</html>
