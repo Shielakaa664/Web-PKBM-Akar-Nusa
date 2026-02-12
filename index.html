@@ -230,7 +230,7 @@
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 30px;
+            gap: 10px;
         }
         
         .nav-links a {
@@ -2067,11 +2067,170 @@
             box-shadow: 0 5px 15px rgba(59, 130, 246, 0.2);
         }
         
-        /* PERBAIKAN JARAK NAVIGASI - HANYA TEMPEL INI SAJA */
-        .nav-links { gap: 15px !important; }
-        .nav-links a { padding: 8px 12px !important; }
-        .nav-links li#adminNavItem { margin-left: 5px !important; }
-        .nav-links li#adminNavItem a { margin-left: 0 !important; }
+       
+        /* ============================================
+   CSS TAMBAHAN UNTUK KELOLA PROGRAM PENDIDIKAN
+   Tempel di bagian <style> yang sudah ada
+============================================ */
+
+/* Styling untuk program management */
+#programsSection .stat-card {
+    transition: all 0.3s;
+}
+
+#programsSection .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Styling untuk tabel program */
+#programsTable td {
+    vertical-align: middle;
+}
+
+#programsTable .btn-edit,
+#programsTable .btn-view,
+#programsTable .btn-delete {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    border-radius: 6px;
+    transition: all 0.3s;
+}
+
+#programsTable .btn-edit:hover,
+#programsTable .btn-view:hover,
+#programsTable .btn-delete:hover {
+    transform: translateY(-2px);
+}
+
+/* Styling untuk modal program */
+#programModal .form-group {
+    margin-bottom: 15px;
+}
+
+#programModal label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+#programModal input[type="text"],
+#programModal input[type="number"],
+#programModal textarea,
+#programModal select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+}
+
+#programModal input:focus,
+#programModal textarea:focus,
+#programModal select:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+#programModal textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Styling untuk preview program */
+#programPreviewContainer {
+    animation: fadeIn 0.5s ease;
+}
+
+#programPreviewContainer > div {
+    transition: all 0.3s;
+}
+
+#programPreviewContainer > div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* Responsive untuk modal program */
+@media (max-width: 768px) {
+    #programModal .upload-modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+    
+    #programModal [style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+        gap: 10px;
+    }
+}
+/* ===== PERBAIKAN NAVIGASI - JARAK SANGAT DEKAT ===== */
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 0px !important;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+    padding: 5px 8px !important;
+    border-radius: 5px;
+    position: relative;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.nav-links a:hover {
+    color: var(--accent-color);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* HILANGKAN GARIS BAWAH */
+.nav-links a::after {
+    display: none !important;
+}
+
+/* ITEM ADMIN - SEJAJAR SEMPURNA */
+.nav-links li#adminNavItem {
+    margin-left: 0px !important;
+}
+
+.nav-links li#adminNavItem a {
+    margin-left: 0 !important;
+    padding: 5px 15px !important;
+    font-size: 0.85rem;
+    background: linear-gradient(135deg, var(--accent-color), #d97706) !important;
+}
+
+/* RESPONSIF MOBILE */
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        gap: 0px !important;
+        width: 100%;
+    }
+    
+    .nav-links a {
+        padding: 10px 15px !important;
+        width: 100%;
+        text-align: center;
+        font-size: 0.9rem;
+    }
+    
+    .nav-links li#adminNavItem {
+        margin-left: 0 !important;
+        width: 100%;
+    }
+}
     </style>
 </head>
 <body>
@@ -5329,6 +5488,972 @@ setTimeout(() => {
 document.addEventListener('DOMContentLoaded', function() {
     initUserInterface();
 });
+// ============================================
+// PERBAIKAN FINAL - PROGRAM PENDIDIKAN DI DASHBOARD ADMIN
+// HANYA TEMPEL SATU KALI - TANPA MERUBAH KODE LAIN
+// ============================================
+(function fixProgramManagement() {
+    'use strict';
+    
+    console.log('🔧 Memperbaiki Program Pendidikan di Dashboard Admin...');
+    
+    // ========== 1. PASTIKAN DATA PROGRAM TERSEDIA ==========
+    if (typeof programData === 'undefined') {
+        window.programData = JSON.parse(localStorage.getItem('pkbmPrograms')) || [
+            { id: 1, nama: "PAKET A", tingkat: "Setara SD/MI", sasaran: "Warga yang belum/tidak menyelesaikan SD", syarat: "Usia minimal 12 tahun, Foto copy KK/KTP, Pas foto 3x4", ijazah: "Dapat digunakan untuk melanjutkan ke Paket B atau sekolah formal tingkat SMP", materi: "Pelajaran umum sesuai kurikulum pendidikan dasar", durasi: "Fleksibel (1-2 tahun)", icon: "fa-graduation-cap", warna: "#10b981", urutan: 1, aktif: true, deskripsi: "Program kesetaraan setara SD/MI", keterangan: "Diakui sama dengan ijazah SD formal" },
+            { id: 2, nama: "PAKET B", tingkat: "Setara SMP/MTs", sasaran: "Lulus SD/Paket A atau putus sekolah tingkat SMP", syarat: "Lulus Paket A/SD, Foto copy KK/KTP, Pas foto 3x4, Ijazah terakhir", ijazah: "Diakui untuk mendaftar SMA/SMK atau melanjutkan ke Paket C", materi: "Pengembangan dari Paket A dengan tambahan pelajaran menengah", durasi: "Fleksibel (1-2 tahun)", icon: "fa-user-graduate", warna: "#3b82f6", urutan: 2, aktif: true, deskripsi: "Program kesetaraan setara SMP/MTs", keterangan: "Ujian Kesetaraan (UNPK) di akhir program" },
+            { id: 3, nama: "PAKET C IPA", tingkat: "Setara SMA/MA Jurusan IPA", sasaran: "Lulus SMP/Paket B atau putus sekolah tingkat SMA", syarat: "Lulus Paket B/SMP, Foto copy KK/KTP, Pas foto 3x4, Ijazah terakhir", ijazah: "Diakui untuk mendaftar perguruan tinggi (PT) atau dunia kerja", materi: "Mata pelajaran IPA: Biologi, Fisika, Kimia, Matematika", durasi: "Fleksibel (1-2 tahun)", icon: "fa-flask", warna: "#8b5cf6", urutan: 3, aktif: true, deskripsi: "Program kesetaraan setara SMA jurusan IPA", keterangan: "Dapat melanjutkan ke PTN/PTS" },
+            { id: 4, nama: "PAKET C IPS", tingkat: "Setara SMA/MA Jurusan IPS", sasaran: "Lulus SMP/Paket B atau putus sekolah tingkat SMA", syarat: "Lulus Paket B/SMP, Foto copy KK/KTP, Pas foto 3x4, Ijazah terakhir", ijazah: "Diakui untuk mendaftar perguruan tinggi (PT) atau dunia kerja", materi: "Mata pelajaran IPS: Ekonomi, Sosiologi, Geografi, Sejarah", durasi: "Fleksibel (1-2 tahun)", icon: "fa-globe", warna: "#ec4899", urutan: 4, aktif: true, deskripsi: "Program kesetaraan setara SMA jurusan IPS", keterangan: "Dapat melanjutkan ke PTN/PTS" }
+        ];
+    }
+    
+    // ========== 2. FUNGSI PENYIMPANAN ==========
+    window.saveProgramData = window.saveProgramData || function() {
+        localStorage.setItem('pkbmPrograms', JSON.stringify(window.programData));
+    };
+    
+    // ========== 3. TAMBAHKAN MENU KE SIDEBAR ==========
+    function addProgramMenu() {
+        const sidebarMenu = document.querySelector('.sidebar-menu');
+        if (!sidebarMenu) { setTimeout(addProgramMenu, 500); return; }
+        if (document.querySelector('.menu-item[data-section="programs"]')) return;
+        
+        const programMenuItem = document.createElement('a');
+        programMenuItem.href = '#programs';
+        programMenuItem.className = 'menu-item';
+        programMenuItem.setAttribute('data-section', 'programs');
+        programMenuItem.innerHTML = '<i class="fas fa-book-open"></i><span>Program Pendidikan</span>';
+        
+        const alumniMenuItem = document.querySelector('.menu-item[data-section="alumni"]');
+        if (alumniMenuItem) sidebarMenu.insertBefore(programMenuItem, alumniMenuItem);
+        else sidebarMenu.appendChild(programMenuItem);
+        
+        programMenuItem.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (typeof window.showSection === 'function') window.showSection('programs');
+            else document.getElementById('programsSection')?.classList.remove('hidden');
+        });
+    }
+    
+    // ========== 4. TAMBAHKAN SECTION PROGRAM ==========
+    function addProgramSection() {
+        if (document.getElementById('programsSection')) return;
+        const mainContent = document.querySelector('.main-content');
+        if (!mainContent) { setTimeout(addProgramSection, 500); return; }
+        
+        const section = document.createElement('div');
+        section.id = 'programsSection';
+        section.className = 'content-section hidden';
+        section.innerHTML = `
+            <div class="section-header" style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+                <h3><i class="fas fa-book-open"></i> Manajemen Program Pendidikan</h3>
+                <button class="add-btn" id="addProgramBtn"><i class="fas fa-plus"></i> Tambah Program Baru</button>
+            </div>
+            <div class="stats-grid" style="margin-bottom: 20px;">
+                <div class="stat-card"><div class="stat-icon" style="background: #10b981;"><i class="fas fa-graduation-cap"></i></div><div class="stat-info"><h3 id="totalPrograms">${window.programData.length}</h3><p>Total Program</p></div></div>
+                <div class="stat-card"><div class="stat-icon" style="background: #3b82f6;"><i class="fas fa-check-circle"></i></div><div class="stat-info"><h3 id="activePrograms">${window.programData.filter(p=>p.aktif).length}</h3><p>Program Aktif</p></div></div>
+                <div class="stat-card"><div class="stat-icon" style="background: #8b5cf6;"><i class="fas fa-users"></i></div><div class="stat-info"><h3 id="totalPesertaProgram">0</h3><p>Total Peserta</p></div></div>
+                <div class="stat-card"><div class="stat-icon" style="background: #f59e0b;"><i class="fas fa-trophy"></i></div><div class="stat-info"><h3 id="lulusanProgram">0</h3><p>Total Lulusan</p></div></div>
+            </div>
+            <div class="data-table"><table id="programsTable"><thead><tr><th>#</th><th>Program</th><th>Tingkat</th><th>Sasaran</th><th>Durasi</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="programsBody"></tbody></table></div>
+            <div style="margin-top: 30px; background: white; padding: 25px; border-radius: 15px;"><h4 style="color: var(--primary-color); margin-bottom: 15px;"><i class="fas fa-eye"></i> Preview Tampilan Program di Website</h4><div id="programPreviewContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;"></div></div>
+        `;
+        mainContent.appendChild(section);
+    }
+    
+    // ========== 5. FUNGSI LOAD PROGRAM KE TABEL ==========
+    window.loadProgramsManagement = window.loadProgramsManagement || function() {
+        const tbody = document.getElementById('programsBody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        
+        const sorted = [...window.programData].sort((a,b)=>a.urutan-b.urutan);
+        sorted.forEach((p, i) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${i+1}</td>
+                <td><div style="display:flex;align-items:center;gap:10px;"><div style="background:${p.warna}20;width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:${p.warna};"><i class="fas ${p.icon}"></i></div><div><strong style="color:${p.warna};">${p.nama}</strong><br><small>${p.deskripsi||''}</small></div></div></td>
+                <td>${p.tingkat}</td>
+                <td>${p.sasaran.substring(0,30)}${p.sasaran.length>30?'...':''}</td>
+                <td>${p.durasi}</td>
+                <td><span style="padding:4px 12px;border-radius:20px;font-size:0.8rem;font-weight:600;background:${p.aktif?'#d1fae5':'#fee2e2'};color:${p.aktif?'#065f46':'#991b1b'};">${p.aktif?'✓ Aktif':'✗ Nonaktif'}</span></td>
+                <td><div style="display:flex;gap:8px;">
+                    <button onclick="editProgram(${p.id})" class="btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                    <button onclick="toggleProgramStatus(${p.id})" class="btn-view" style="background:${p.aktif?'#f59e0b':'#10b981'};"><i class="fas ${p.aktif?'fa-eye-slash':'fa-eye'}"></i> ${p.aktif?'Nonaktifkan':'Aktifkan'}</button>
+                    <button onclick="deleteProgram(${p.id})" class="btn-delete"><i class="fas fa-trash"></i> Hapus</button>
+                </div></td>
+            `;
+            tbody.appendChild(row);
+        });
+        
+        document.getElementById('totalPrograms') && (document.getElementById('totalPrograms').textContent = window.programData.length);
+        document.getElementById('activePrograms') && (document.getElementById('activePrograms').textContent = window.programData.filter(p=>p.aktif).length);
+        window.loadProgramPreview && window.loadProgramPreview();
+    };
+    
+    // ========== 6. FUNGSI PREVIEW PROGRAM ==========
+    window.loadProgramPreview = window.loadProgramPreview || function() {
+        const preview = document.getElementById('programPreviewContainer');
+        if (!preview) return;
+        preview.innerHTML = '';
+        window.programData.filter(p=>p.aktif).sort((a,b)=>a.urutan-b.urutan).slice(0,4).forEach(p => {
+            preview.innerHTML += `<div style="background:white;border-radius:12px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,0.05);border-left:4px solid ${p.warna};">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+                    <div style="background:${p.warna}15;width:45px;height:45px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:${p.warna};font-size:1.3rem;"><i class="fas ${p.icon}"></i></div>
+                    <div><h5 style="margin:0;color:${p.warna};font-weight:700;">${p.nama}</h5><small style="color:#64748b;">${p.tingkat}</small></div>
+                </div>
+                <p style="font-size:0.85rem;color:#475569;margin-bottom:10px;">${p.deskripsi||p.tingkat}</p>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;">
+                    <span style="font-size:0.8rem;color:#64748b;"><i class="fas fa-clock"></i> ${p.durasi}</span>
+                    <span style="background:${p.warna}10;color:${p.warna};padding:4px 10px;border-radius:15px;font-size:0.75rem;font-weight:600;">${p.keterangan?.substring(0,20)||''}</span>
+                </div>
+            </div>`;
+        });
+    };
+    
+    // ========== 7. FUNGSI MODAL PROGRAM ==========
+    window.createProgramModal = window.createProgramModal || function() {
+        if (document.getElementById('programModal')) document.getElementById('programModal').remove();
+        const modal = document.createElement('div');
+        modal.id = 'programModal';
+        modal.className = 'upload-modal';
+        modal.innerHTML = `
+            <div class="upload-modal-content" style="max-width:900px;">
+                <button class="close-modal" onclick="document.getElementById('programModal').style.display='none'">&times;</button>
+                <h3 style="color: var(--primary-color); margin-bottom: 25px;" id="programModalTitle"><i class="fas fa-plus-circle"></i> Tambah Program Pendidikan</h3>
+                <div id="programError" class="alert alert-error" style="display: none;"></div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <div class="form-group"><label><i class="fas fa-tag"></i> Nama Program *</label><input type="text" id="programName" placeholder="Contoh: PAKET A, PAKET B"></div>
+                        <div class="form-group"><label><i class="fas fa-signal"></i> Tingkat *</label><input type="text" id="programLevel" placeholder="Contoh: Setara SD/MI"></div>
+                        <div class="form-group"><label><i class="fas fa-users"></i> Sasaran *</label><textarea id="programTarget" rows="2" placeholder="Sasaran peserta program..."></textarea></div>
+                        <div class="form-group"><label><i class="fas fa-file-alt"></i> Persyaratan *</label><textarea id="programRequirements" rows="3" placeholder="Persyaratan mengikuti program..."></textarea></div>
+                        <div class="form-group"><label><i class="fas fa-clock"></i> Durasi *</label><input type="text" id="programDuration" placeholder="Contoh: 1-2 tahun"></div>
+                    </div>
+                    <div>
+                        <div class="form-group"><label><i class="fas fa-certificate"></i> Ijazah *</label><textarea id="programCertificate" rows="2" placeholder="Keterangan ijazah..."></textarea></div>
+                        <div class="form-group"><label><i class="fas fa-book"></i> Materi *</label><textarea id="programMaterial" rows="3" placeholder="Materi pelajaran..."></textarea></div>
+                        <div class="form-group"><label><i class="fas fa-palette"></i> Warna Program</label><div style="display:flex;gap:10px;"><input type="color" id="programColor" value="#3b82f6" style="width:50px;height:40px;"><input type="text" id="programColorText" placeholder="#3b82f6" value="#3b82f6" style="flex:1;"></div></div>
+                        <div class="form-group"><label><i class="fas fa-icons"></i> Icon</label><select id="programIcon" style="width:100%;padding:12px;"><option value="fa-graduation-cap">🎓 Graduation Cap</option><option value="fa-user-graduate">👨‍🎓 User Graduate</option><option value="fa-flask">🧪 Flask (IPA)</option><option value="fa-globe">🌍 Globe (IPS)</option><option value="fa-book">📚 Book</option></select></div>
+                        <div class="form-group"><label><i class="fas fa-align-left"></i> Deskripsi</label><textarea id="programDescription" rows="2" placeholder="Deskripsi singkat..."></textarea></div>
+                        <div class="form-group"><label><i class="fas fa-info-circle"></i> Keterangan</label><input type="text" id="programNote" placeholder="Diakui sama dengan ijazah formal"></div>
+                        <div style="display:flex;align-items:center;gap:15px;margin-top:20px;">
+                            <label><input type="checkbox" id="programActive" checked> <i class="fas fa-check-circle" style="color:#10b981;"></i> Aktif</label>
+                            <label><i class="fas fa-sort"></i> Urutan: <input type="number" id="programOrder" value="1" min="1" style="width:60px;padding:5px;"></label>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex;gap:15px;margin-top:30px;border-top:1px solid #e2e8f0;padding-top:25px;">
+                    <button onclick="saveProgram()" class="btn" style="background:var(--success-color);color:white;flex:1;padding:14px;"><i class="fas fa-save"></i> Simpan Program</button>
+                    <button onclick="document.getElementById('programModal').style.display='none'" class="btn" style="background:#6c757d;color:white;flex:1;padding:14px;"><i class="fas fa-times"></i> Batal</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        
+        setTimeout(() => {
+            const c = document.getElementById('programColor');
+            const ct = document.getElementById('programColorText');
+            if(c && ct) {
+                c.addEventListener('input', ()=>ct.value=c.value);
+                ct.addEventListener('input', function(){ if(/^#[0-9A-F]{6}$/i.test(this.value)) c.value=this.value; });
+            }
+        }, 100);
+    };
+    
+    // ========== 8. FUNGSI TAMBAH PROGRAM ==========
+    window.addNewProgram = window.addNewProgram || function() {
+        window.createProgramModal();
+        setTimeout(() => {
+            document.getElementById('programModalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Tambah Program Pendidikan';
+            ['programName','programLevel','programTarget','programRequirements','programCertificate','programMaterial','programDescription','programNote'].forEach(id=>{
+                const el = document.getElementById(id);
+                if(el) el.value = '';
+            });
+            document.getElementById('programDuration') && (document.getElementById('programDuration').value = 'Fleksibel (1-2 tahun)');
+            document.getElementById('programColor') && (document.getElementById('programColor').value = '#3b82f6');
+            document.getElementById('programColorText') && (document.getElementById('programColorText').value = '#3b82f6');
+            document.getElementById('programIcon') && (document.getElementById('programIcon').value = 'fa-graduation-cap');
+            document.getElementById('programActive') && (document.getElementById('programActive').checked = true);
+            document.getElementById('programOrder') && (document.getElementById('programOrder').value = window.programData.length + 1);
+            delete document.getElementById('programModal').dataset.editingId;
+            document.getElementById('programModal').style.display = 'flex';
+        }, 100);
+    };
+    
+    // ========== 9. FUNGSI EDIT PROGRAM ==========
+    window.editProgram = window.editProgram || function(id) {
+        const p = window.programData.find(p=>p.id===id);
+        if(!p) return;
+        window.createProgramModal();
+        setTimeout(() => {
+            document.getElementById('programModalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Program Pendidikan';
+            document.getElementById('programName').value = p.nama||'';
+            document.getElementById('programLevel').value = p.tingkat||'';
+            document.getElementById('programTarget').value = p.sasaran||'';
+            document.getElementById('programRequirements').value = p.syarat||'';
+            document.getElementById('programDuration').value = p.durasi||'Fleksibel (1-2 tahun)';
+            document.getElementById('programCertificate').value = p.ijazah||'';
+            document.getElementById('programMaterial').value = p.materi||'';
+            document.getElementById('programColor').value = p.warna||'#3b82f6';
+            document.getElementById('programColorText').value = p.warna||'#3b82f6';
+            document.getElementById('programIcon').value = p.icon||'fa-graduation-cap';
+            document.getElementById('programDescription').value = p.deskripsi||'';
+            document.getElementById('programNote').value = p.keterangan||'';
+            document.getElementById('programActive').checked = p.aktif!==false;
+            document.getElementById('programOrder').value = p.urutan||1;
+            document.getElementById('programModal').dataset.editingId = id;
+            document.getElementById('programModal').style.display = 'flex';
+        }, 100);
+    };
+    
+    // ========== 10. FUNGSI SAVE PROGRAM ==========
+    window.saveProgram = window.saveProgram || function() {
+        const name = document.getElementById('programName')?.value?.trim();
+        const level = document.getElementById('programLevel')?.value?.trim();
+        const target = document.getElementById('programTarget')?.value?.trim();
+        const req = document.getElementById('programRequirements')?.value?.trim();
+        const dur = document.getElementById('programDuration')?.value?.trim();
+        const cert = document.getElementById('programCertificate')?.value?.trim();
+        const mat = document.getElementById('programMaterial')?.value?.trim();
+        const color = document.getElementById('programColorText')?.value?.trim() || '#3b82f6';
+        const icon = document.getElementById('programIcon')?.value || 'fa-graduation-cap';
+        const desc = document.getElementById('programDescription')?.value?.trim() || '';
+        const note = document.getElementById('programNote')?.value?.trim() || '';
+        const active = document.getElementById('programActive')?.checked || true;
+        const order = parseInt(document.getElementById('programOrder')?.value) || 1;
+        const error = document.getElementById('programError');
+        
+        if(!name || !level || !target || !req || !dur || !cert || !mat) {
+            if(error) { error.innerHTML = '<i class="fas fa-exclamation-circle"></i> Harap isi semua field wajib!'; error.style.display = 'block'; }
+            return;
+        }
+        if(error) error.style.display = 'none';
+        
+        const modal = document.getElementById('programModal');
+        const editingId = modal?.dataset.editingId;
+        
+        if(editingId) {
+            const idx = window.programData.findIndex(p=>p.id===parseInt(editingId));
+            if(idx!==-1) {
+                window.programData[idx] = {...window.programData[idx], nama:name, tingkat:level, sasaran:target, syarat:req, durasi:dur, ijazah:cert, materi:mat, warna:color, icon:icon, deskripsi:desc, keterangan:note, aktif:active, urutan:order};
+                alert('✅ Program berhasil diupdate!');
+            }
+        } else {
+            window.programData.push({ id: Date.now(), nama:name, tingkat:level, sasaran:target, syarat:req, durasi:dur, ijazah:cert, materi:mat, icon:icon, warna:color, deskripsi:desc, keterangan:note, urutan:order, aktif:active });
+            alert('✅ Program berhasil ditambahkan!');
+        }
+        
+        window.saveProgramData();
+        window.loadProgramsManagement();
+        if(typeof updateUserProgramsDisplay === 'function') updateUserProgramsDisplay();
+        modal && (modal.style.display = 'none');
+    };
+    
+    // ========== 11. FUNGSI TOGGLE STATUS ==========
+    window.toggleProgramStatus = window.toggleProgramStatus || function(id) {
+        const p = window.programData.find(p=>p.id===id);
+        if(p) { p.aktif = !p.aktif; window.saveProgramData(); window.loadProgramsManagement(); if(typeof updateUserProgramsDisplay === 'function') updateUserProgramsDisplay(); alert(`Program ${p.nama} ${p.aktif?'diaktifkan':'dinonaktifkan'}!`); }
+    };
+    
+    // ========== 12. FUNGSI HAPUS PROGRAM ==========
+    window.deleteProgram = window.deleteProgram || function(id) {
+        const p = window.programData.find(p=>p.id===id);
+        if(p && confirm(`Hapus program "${p.nama}"?`)) {
+            window.programData = window.programData.filter(p=>p.id!==id);
+            window.saveProgramData();
+            window.loadProgramsManagement();
+            if(typeof updateUserProgramsDisplay === 'function') updateUserProgramsDisplay();
+            alert('✅ Program dihapus!');
+        }
+    };
+    
+    // ========== 13. UPDATE TAMPILAN USER ==========
+    window.updateUserProgramsDisplay = window.updateUserProgramsDisplay || function() {
+        const grid = document.querySelector('.facilities-grid');
+        if(!grid) return;
+        
+        const defaultCards = grid.querySelectorAll('.facility-card');
+        defaultCards.forEach(c => c.remove());
+        
+        window.programData.filter(p=>p.aktif).sort((a,b)=>a.urutan-b.urutan).forEach(p => {
+            const card = document.createElement('div');
+            card.className = 'facility-card';
+            card.innerHTML = `
+                <div class="facility-icon" style="background: ${p.warna};"><i class="fas ${p.icon}"></i></div>
+                <h3 style="color: ${p.warna};">${p.nama}</h3>
+                <p style="text-align: left; font-size: 0.95rem;">
+                    <strong>Tingkat:</strong> ${p.tingkat}<br>
+                    <strong>Sasaran:</strong> ${p.sasaran}<br>
+                    <strong>Ijazah:</strong> ${p.ijazah}<br>
+                    <strong>Materi:</strong> ${(p.materi||'').substring(0,50)}...<br>
+                    <strong>Persyaratan:</strong> ${(p.syarat||'').substring(0,50)}...
+                </p>
+                <div style="margin-top:15px;border-top:1px solid #e5e7eb;padding-top:15px;">
+                    <a href="#contact" style="color: ${p.warna}; font-weight: 600;"><i class="fas fa-info-circle"></i> Info Pendaftaran</a>
+                    <span style="float:right;font-size:0.8rem;color:#64748b;"><i class="fas fa-clock"></i> ${p.durasi}</span>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+        
+        const infoCard = document.createElement('div');
+        infoCard.className = 'facility-card';
+        infoCard.innerHTML = `<div class="facility-icon" style="background:#f59e0b;"><i class="fas fa-info-circle"></i></div>
+            <h3>Informasi Penting</h3>
+            <div style="text-align:left;"><p><strong>🏫 Penyelenggara:</strong> PKBM AKAR NUSA Paninggaran</p>
+            <p><strong>📋 Persyaratan Umum:</strong></p><ul style="padding-left:20px;"><li>Foto copy ijazah terakhir</li><li>Foto copy KK dan KTP</li><li>Pas foto 3x4 (4 lembar)</li></ul>
+            <p><strong>⏰ Waktu Belajar:</strong> Fleksibel</p><p><strong>🎓 Ijazah:</strong> Diakui sama dengan sekolah formal</p></div>`;
+        grid.appendChild(infoCard);
+    };
+    
+    // ========== 14. OVERRIDE SHOW SECTION ==========
+    if(window.showSection) {
+        const original = window.showSection;
+        window.showSection = function(sectionId) {
+            original.call(this, sectionId);
+            if(sectionId === 'programs') setTimeout(() => window.loadProgramsManagement(), 200);
+        };
+    }
+    
+    // ========== 15. INITIALISASI ==========
+    function init() {
+        window.saveProgramData();
+        addProgramMenu();
+        addProgramSection();
+        setTimeout(() => {
+            window.loadProgramsManagement();
+            window.updateUserProgramsDisplay();
+            
+            const btn = document.getElementById('addProgramBtn');
+            if(btn) {
+                btn.replaceWith(btn.cloneNode(true));
+                document.getElementById('addProgramBtn')?.addEventListener('click', window.addNewProgram);
+            }
+        }, 1000);
+    }
+    
+    if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+    
+    console.log('✅ Perbaikan Program Pendidikan SELESAI!');
+})();
+
+// ============================================
+// PERBAIKAN FINAL - TAMPILAN PROGRAM PENDIDIKAN UNTUK PENGUNJUNG
+// MEMPERBAIKI INFORMASI YANG TERPOTONG
+// ============================================
+(function fixUserProgramDisplay() {
+    'use strict';
+    
+    console.log('🎓 Memperbaiki tampilan Program Pendidikan untuk pengunjung...');
+    
+    // ========== 1. PASTIKAN DATA PROGRAM TERSEDIA ==========
+    if (typeof window.programData === 'undefined') {
+        window.programData = JSON.parse(localStorage.getItem('pkbmPrograms')) || [
+            { id: 1, nama: "PAKET A", tingkat: "Setara SD/MI", sasaran: "Warga yang belum/tidak menyelesaikan SD", syarat: "Usia minimal 12 tahun, Foto copy KK/KTP, Pas foto 3x4", ijazah: "Dapat digunakan untuk melanjutkan ke Paket B atau sekolah formal tingkat SMP", materi: "Pelajaran umum sesuai kurikulum pendidikan dasar", durasi: "Fleksibel (1-2 tahun)", icon: "fa-graduation-cap", warna: "#10b981", urutan: 1, aktif: true, deskripsi: "Program kesetaraan setara SD/MI", keterangan: "Diakui sama dengan ijazah SD formal" },
+            { id: 2, nama: "PAKET B", tingkat: "Setara SMP/MTs", sasaran: "Lulus SD/Paket A atau putus sekolah tingkat SMP", syarat: "Lulus Paket A/SD, Foto copy KK/KTP, Pas foto 3x4, Ijazah terakhir", ijazah: "Diakui untuk mendaftar SMA/SMK atau melanjutkan ke Paket C", materi: "Pengembangan dari Paket A dengan tambahan pelajaran menengah", durasi: "Fleksibel (1-2 tahun)", icon: "fa-user-graduate", warna: "#3b82f6", urutan: 2, aktif: true, deskripsi: "Program kesetaraan setara SMP/MTs", keterangan: "Ujian Kesetaraan (UNPK) di akhir program" },
+            { id: 3, nama: "PAKET C IPA", tingkat: "Setara SMA/MA Jurusan IPA", sasaran: "Lulus SMP/Paket B atau putus sekolah tingkat SMA", syarat: "Lulus Paket B/SMP, Foto copy KK/KTP, Pas foto 3x4, Ijazah terakhir", ijazah: "Diakui untuk mendaftar perguruan tinggi (PT) atau dunia kerja", materi: "Mata pelajaran IPA: Biologi, Fisika, Kimia, Matematika", durasi: "Fleksibel (1-2 tahun)", icon: "fa-flask", warna: "#8b5cf6", urutan: 3, aktif: true, deskripsi: "Program kesetaraan setara SMA jurusan IPA", keterangan: "Dapat melanjutkan ke PTN/PTS" },
+            { id: 4, nama: "PAKET C IPS", tingkat: "Setara SMA/MA Jurusan IPS", sasaran: "Lulus SMP/Paket B atau putus sekolah tingkat SMA", syarat: "Lulus Paket B/SMP, Foto copy KK/KTP, Pas foto 3x4, Ijazah terakhir", ijazah: "Diakui untuk mendaftar perguruan tinggi (PT) atau dunia kerja", materi: "Mata pelajaran IPS: Ekonomi, Sosiologi, Geografi, Sejarah", durasi: "Fleksibel (1-2 tahun)", icon: "fa-globe", warna: "#ec4899", urutan: 4, aktif: true, deskripsi: "Program kesetaraan setara SMA jurusan IPS", keterangan: "Dapat melanjutkan ke PTN/PTS" }
+        ];
+    }
+    
+    // ========== 2. FUNGSI UTAMA - UPDATE TAMPILAN PROGRAM ==========
+    window.updateUserProgramsDisplay = function() {
+        const facilitiesGrid = document.querySelector('.facilities-grid');
+        if (!facilitiesGrid) {
+            console.log('❌ Facilities grid tidak ditemukan');
+            return;
+        }
+        
+        console.log('🔄 Mengupdate tampilan program pendidikan...');
+        
+        // Hapus SEMUA program lama (termasuk yang default)
+        while (facilitiesGrid.firstChild) {
+            facilitiesGrid.removeChild(facilitiesGrid.firstChild);
+        }
+        
+        // Tampilkan program dari database yang AKTIF
+        const activePrograms = window.programData.filter(p => p.aktif === true).sort((a, b) => a.urutan - b.urutan);
+        
+        activePrograms.forEach(program => {
+            const programCard = document.createElement('div');
+            programCard.className = 'facility-card';
+            
+            // Format persyaratan dengan aman dan LENGKAP
+            let syaratHTML = '';
+            if (program.syarat) {
+                const syaratArray = program.syarat.split(',').map(s => s.trim());
+                syaratHTML = syaratArray.map(s => `<li>✓ ${s}</li>`).join('');
+            }
+            
+            // Format materi dengan lengkap
+            let materiText = program.materi || 'Materi pelajaran sesuai kurikulum';
+            
+            // Format ijazah dengan lengkap
+            let ijazahText = program.ijazah || 'Diakui setara dengan pendidikan formal';
+            
+            // Tentukan judul program
+            let programTitle = program.nama;
+            
+            programCard.innerHTML = `
+                <div class="facility-icon" style="background: ${program.warna || '#3b82f6'};">
+                    <i class="fas ${program.icon || 'fa-graduation-cap'}"></i>
+                </div>
+                <h3 style="color: ${program.warna || '#3b82f6'}; margin-bottom: 15px; font-size: 1.4rem;">${programTitle}</h3>
+                
+                <div style="text-align: left; font-size: 0.95rem; line-height: 1.7;">
+                    <p style="margin-bottom: 12px;">
+                        <strong style="display: inline-block; min-width: 80px; color: ${program.warna || '#3b82f6'};">📌 Tingkat:</strong> 
+                        <span>${program.tingkat || '-'}</span>
+                    </p>
+                    
+                    <p style="margin-bottom: 12px;">
+                        <strong style="display: inline-block; min-width: 80px; color: ${program.warna || '#3b82f6'};">👥 Sasaran:</strong> 
+                        <span>${program.sasaran || '-'}</span>
+                    </p>
+                    
+                    <p style="margin-bottom: 12px;">
+                        <strong style="display: inline-block; min-width: 80px; color: ${program.warna || '#3b82f6'};">🎓 Ijazah:</strong> 
+                        <span>${ijazahText}</span>
+                    </p>
+                    
+                    <p style="margin-bottom: 12px;">
+                        <strong style="display: inline-block; min-width: 80px; color: ${program.warna || '#3b82f6'};">📚 Materi:</strong> 
+                        <span>${materiText}</span>
+                    </p>
+                    
+                    ${syaratHTML ? `
+                    <div style="margin-bottom: 12px;">
+                        <strong style="display: inline-block; min-width: 80px; color: ${program.warna || '#3b82f6'};">📋 Syarat:</strong>
+                        <ul style="padding-left: 25px; margin-top: 5px; list-style-type: none;">
+                            ${syaratHTML}
+                        </ul>
+                    </div>
+                    ` : ''}
+                    
+                    <p style="margin-bottom: 5px;">
+                        <strong style="display: inline-block; min-width: 80px; color: ${program.warna || '#3b82f6'};">⏱️ Durasi:</strong> 
+                        <span>${program.durasi || 'Fleksibel'}</span>
+                    </p>
+                </div>
+                
+                <div style="margin-top: 20px; padding-top: 15px; border-top: 2px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                    <a href="#contact" style="background: ${program.warna || '#3b82f6'}; color: white; padding: 8px 18px; border-radius: 25px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-info-circle"></i> Info & Pendaftaran
+                    </a>
+                    <span style="font-size: 0.85rem; color: #4b5563; background: #f3f4f6; padding: 5px 12px; border-radius: 20px;">
+                        <i class="fas fa-clock"></i> ${program.durasi || 'Fleksibel'}
+                    </span>
+                </div>
+                
+                ${program.keterangan ? `
+                <div style="margin-top: 12px; background: ${program.warna}10; padding: 8px 12px; border-radius: 8px; border-left: 4px solid ${program.warna};">
+                    <i class="fas fa-star" style="color: ${program.warna};"></i> 
+                    <span style="font-size: 0.85rem; color: #1f2937;">${program.keterangan}</span>
+                </div>
+                ` : ''}
+            `;
+            
+            facilitiesGrid.appendChild(programCard);
+        });
+        
+        // Tambahkan card informasi umum (TETAP)
+        const infoCard = document.createElement('div');
+        infoCard.className = 'facility-card';
+        infoCard.innerHTML = `
+            <div class="facility-icon" style="background: #f59e0b;">
+                <i class="fas fa-info-circle"></i>
+            </div>
+            <h3 style="color: #f59e0b; margin-bottom: 15px;">Informasi Penting</h3>
+            <div style="text-align: left; font-size: 0.95rem; line-height: 1.7;">
+                <p style="margin-bottom: 12px;">
+                    <strong style="color: #f59e0b;">🏫 Penyelenggara:</strong><br>
+                    PKBM AKAR NUSA Paninggaran
+                </p>
+                <p style="margin-bottom: 12px;">
+                    <strong style="color: #f59e0b;">📋 Persyaratan Umum:</strong>
+                </p>
+                <ul style="padding-left: 25px; margin-bottom: 12px; list-style-type: none;">
+                    <li style="margin-bottom: 6px;"><i class="fas fa-check-circle" style="color: #f59e0b;"></i> Foto copy ijazah terakhir</li>
+                    <li style="margin-bottom: 6px;"><i class="fas fa-check-circle" style="color: #f59e0b;"></i> Foto copy KK dan KTP</li>
+                    <li style="margin-bottom: 6px;"><i class="fas fa-check-circle" style="color: #f59e0b;"></i> Pas foto 3x4 (4 lembar)</li>
+                    <li style="margin-bottom: 6px;"><i class="fas fa-check-circle" style="color: #f59e0b;"></i> Usia minimal Paket A: 12 tahun</li>
+                </ul>
+                <p style="margin-bottom: 12px;">
+                    <strong style="color: #f59e0b;">⏰ Waktu Belajar:</strong><br>
+                    Fleksibel, disesuaikan dengan kebutuhan
+                </p>
+                <p>
+                    <strong style="color: #f59e0b;">🎓 Ijazah:</strong><br>
+                    Diakui sama dengan sekolah formal (PP No. 17/2010)
+                </p>
+            </div>
+        `;
+        facilitiesGrid.appendChild(infoCard);
+        
+        console.log(`✅ Berhasil menampilkan ${activePrograms.length} program + 1 info umum`);
+    };
+    
+    // ========== 3. OVERRIDE FUNGSI LAMA ==========
+    // Simpan fungsi lama jika ada
+    const oldUpdateFunction = window.updateUserProgramsDisplay;
+    
+    // Ganti dengan fungsi baru yang lebih baik
+    if (typeof window.updateUserProgramsDisplay === 'function') {
+        window.updateUserProgramsDisplay = window.updateUserProgramsDisplay;
+    }
+    
+    // ========== 4. TAMBAHKAN CSS KHUSUS UNTUK PROGRAM ==========
+    const programCSS = document.createElement('style');
+    programCSS.textContent = `
+        /* ===== PERBAIKAN TAMPILAN PROGRAM PENDIDIKAN ===== */
+        .facilities-grid {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
+            gap: 30px !important;
+        }
+        
+        .facility-card {
+            padding: 30px 25px !important;
+            height: auto !important;
+            min-height: 550px !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+        
+        .facility-card p {
+            font-size: 0.95rem !important;
+            line-height: 1.7 !important;
+            margin-bottom: 12px !important;
+            color: #334155 !important;
+        }
+        
+        .facility-card ul {
+            margin-top: 8px !important;
+            margin-bottom: 12px !important;
+        }
+        
+        .facility-card li {
+            margin-bottom: 6px !important;
+            font-size: 0.9rem !important;
+            display: flex !important;
+            align-items: flex-start !important;
+            gap: 6px !important;
+        }
+        
+        .facility-card li i {
+            margin-top: 3px !important;
+            flex-shrink: 0 !important;
+        }
+        
+        .facility-card a[href="#contact"] {
+            transition: all 0.3s ease !important;
+        }
+        
+        .facility-card a[href="#contact"]:hover {
+            transform: translateY(-3px) !important;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15) !important;
+        }
+        
+        @media (max-width: 768px) {
+            .facilities-grid {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .facility-card {
+                min-height: auto !important;
+                padding: 25px 20px !important;
+            }
+        }
+    `;
+    document.head.appendChild(programCSS);
+    
+    // ========== 5. EKSEKUSI ==========
+    // Jalankan segera
+    setTimeout(() => {
+        if (typeof window.updateUserProgramsDisplay === 'function') {
+            window.updateUserProgramsDisplay();
+        }
+    }, 500);
+    
+    // Jalankan juga setelah DOM siap
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                if (typeof window.updateUserProgramsDisplay === 'function') {
+                    window.updateUserProgramsDisplay();
+                }
+            }, 1000);
+        });
+    }
+    
+    // Intercept jika ada fungsi update lain yang dipanggil
+    const originalSetTimeout = window.setTimeout;
+    window.setTimeout = function(callback, delay) {
+        if (callback && callback.toString().includes('updateUserProgramsDisplay')) {
+            const wrappedCallback = function() {
+                callback();
+                setTimeout(() => {
+                    if (typeof window.updateUserProgramsDisplay === 'function') {
+                        window.updateUserProgramsDisplay();
+                    }
+                }, 100);
+            };
+            return originalSetTimeout(wrappedCallback, delay);
+        }
+        return originalSetTimeout(callback, delay);
+    };
+    
+    console.log('✅ Perbaikan tampilan program selesai! Informasi akan tampil lengkap.');
+})();
+
+// ============================================
+// PERBAIKAN FINAL - HILANGKAN EFEK GETAR PADA KARTU PROGRAM
+// UNTUK DASHBOARD PENGUNJUNG - TIDAK ADA ANIMASI BERGERAK
+// ============================================
+(function fixProgramCardShaking() {
+    'use strict';
+    
+    console.log('🔧 Menghilangkan efek getar pada kartu program...');
+    
+    // ========== 1. TAMBAHKAN CSS INLINE YANG SANGAT SPESIFIK ==========
+    const antiShakeCSS = document.createElement('style');
+    antiShakeCSS.textContent = `
+        /* ===== PERBAIKAN TOTAL - HILANGKAN SEMUA EFEK GETAR ===== */
+        
+        /* NONAKTIFKAN ANIMASI FLOAT DI SEMUA ELEMEN */
+        .gallery-item,
+        .alumni-card-small,
+        .facility-card,
+        .facility-card:hover,
+        .gallery-item:hover,
+        .alumni-card-small:hover,
+        .facilities .facility-card,
+        section .facility-card,
+        div .facility-card {
+            animation: none !important;
+            animation-duration: 0s !important;
+            animation-delay: 0s !important;
+            animation-iteration-count: 1 !important;
+            animation-name: none !important;
+            -webkit-animation: none !important;
+            transform: translateY(0) !important;
+        }
+        
+        /* HAPUS SEMUA ANIMASI DARI CSS */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(0); }
+        }
+        
+        /* SET ULANG TRANSISI YANG NORMAL (TANPA GETAR) */
+        .facility-card {
+            transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+            will-change: transform;
+            backface-visibility: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .facility-card:hover {
+            transform: translateY(-6px) !important;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12) !important;
+        }
+        
+        /* HAPUS ANIMASI DELAY */
+        .gallery-item:nth-child(n),
+        .alumni-card-small:nth-child(n),
+        .facility-card:nth-child(n) {
+            animation-delay: 0s !important;
+        }
+        
+        /* HAPUS ANIMASI DARI GALLERY DAN ALUMNI JUGA */
+        .gallery-item {
+            animation: none !important;
+        }
+        
+        .alumni-card-small {
+            animation: none !important;
+        }
+        
+        /* PERBAIKI ICON HOVER (TETAP HALUS) */
+        .facility-card:hover .facility-icon {
+            transform: rotateY(180deg) !important;
+            transition: transform 0.4s !important;
+        }
+    `;
+    document.head.appendChild(antiShakeCSS);
+    
+    // ========== 2. HAPUS ANIMASI LANGSUNG DARI ELEMEN ==========
+    function removeAnimationsFromElements() {
+        // Hapus dari semua facility-card (kartu program)
+        document.querySelectorAll('.facility-card').forEach(el => {
+            el.style.animation = 'none';
+            el.style.animationDuration = '0s';
+            el.style.animationDelay = '0s';
+            el.style.animationIterationCount = '1';
+            el.style.transform = 'none';
+        });
+        
+        // Hapus dari gallery-item
+        document.querySelectorAll('.gallery-item').forEach(el => {
+            el.style.animation = 'none';
+        });
+        
+        // Hapus dari alumni-card-small
+        document.querySelectorAll('.alumni-card-small').forEach(el => {
+            el.style.animation = 'none';
+        });
+    }
+    
+    // ========== 3. CARI DAN HAPUS CSS YANG MENYEBABKAN GETAR ==========
+    function removeFloatingAnimationsFromStyles() {
+        const styleTags = document.querySelectorAll('style');
+        styleTags.forEach(tag => {
+            if (tag.textContent.includes('@keyframes float') || 
+                tag.textContent.includes('animation: float') ||
+                tag.textContent.includes('gallery-item, .alumni-card-small')) {
+                
+                // Hapus keyframes float
+                tag.textContent = tag.textContent.replace(/@keyframes\s+float\s*{[^}]*}([^{]*{[^}]*})*/g, '');
+                
+                // Hapus animation dari gallery-item dan alumni-card-small
+                tag.textContent = tag.textContent.replace(/\.gallery-item,\s*\.alumni-card-small\s*{[^}]*animation:[^;]*;[^}]*}/g, 
+                    '.gallery-item, .alumni-card-small { animation: none !important; }');
+                
+                // Hapus animation-delay
+                tag.textContent = tag.textContent.replace(/\.gallery-item:nth-child\([^)]*\)\s*{[^}]*animation-delay:[^;]*;[^}]*}/g, '');
+                tag.textContent = tag.textContent.replace(/\.alumni-card-small:nth-child\([^)]*\)\s*{[^}]*animation-delay:[^;]*;[^}]*}/g, '');
+            }
+        });
+    }
+    
+    // ========== 4. OVERRIDE FUNGSI UPDATE PROGRAM ==========
+    // Simpan fungsi asli
+    const originalUpdateFunction = window.updateUserProgramsDisplay;
+    
+    // Buat fungsi baru yang TIDAK menambahkan animasi
+    window.updateUserProgramsDisplay = function() {
+        const facilitiesGrid = document.querySelector('.facilities-grid');
+        if (!facilitiesGrid) return;
+        
+        // Hapus semua program lama
+        while (facilitiesGrid.firstChild) {
+            facilitiesGrid.removeChild(facilitiesGrid.firstChild);
+        }
+        
+        // Tampilkan program dari database yang AKTIF
+        const activePrograms = window.programData ? window.programData.filter(p => p.aktif === true).sort((a, b) => a.urutan - b.urutan) : [];
+        
+        activePrograms.forEach(program => {
+            const programCard = document.createElement('div');
+            programCard.className = 'facility-card';
+            
+            // Pastikan tidak ada style inline yang menambahkan animasi
+            programCard.style.animation = 'none';
+            
+            // Format persyaratan
+            let syaratHTML = '';
+            if (program.syarat) {
+                const syaratArray = program.syarat.split(',').map(s => s.trim());
+                syaratHTML = syaratArray.map(s => `<li style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px;"><i class="fas fa-check-circle" style="color: ${program.warna}; margin-top: 3px;"></i> ${s}</li>`).join('');
+            }
+            
+            programCard.innerHTML = `
+                <div class="facility-icon" style="background: ${program.warna || '#3b82f6'};">
+                    <i class="fas ${program.icon || 'fa-graduation-cap'}"></i>
+                </div>
+                <h3 style="color: ${program.warna || '#3b82f6'}; margin-bottom: 15px; font-size: 1.4rem;">${program.nama}</h3>
+                
+                <div style="text-align: left; font-size: 0.95rem; line-height: 1.7;">
+                    <p style="margin-bottom: 12px; display: flex; flex-wrap: wrap;">
+                        <strong style="min-width: 80px; color: ${program.warna || '#3b82f6'};">📌 Tingkat:</strong> 
+                        <span style="flex: 1;">${program.tingkat || '-'}</span>
+                    </p>
+                    
+                    <p style="margin-bottom: 12px; display: flex; flex-wrap: wrap;">
+                        <strong style="min-width: 80px; color: ${program.warna || '#3b82f6'};">👥 Sasaran:</strong> 
+                        <span style="flex: 1;">${program.sasaran || '-'}</span>
+                    </p>
+                    
+                    <p style="margin-bottom: 12px; display: flex; flex-wrap: wrap;">
+                        <strong style="min-width: 80px; color: ${program.warna || '#3b82f6'};">🎓 Ijazah:</strong> 
+                        <span style="flex: 1;">${program.ijazah || 'Diakui setara dengan pendidikan formal'}</span>
+                    </p>
+                    
+                    <p style="margin-bottom: 12px; display: flex; flex-wrap: wrap;">
+                        <strong style="min-width: 80px; color: ${program.warna || '#3b82f6'};">📚 Materi:</strong> 
+                        <span style="flex: 1;">${program.materi || 'Materi pelajaran sesuai kurikulum'}</span>
+                    </p>
+                    
+                    ${syaratHTML ? `
+                    <div style="margin-bottom: 12px;">
+                        <strong style="display: block; margin-bottom: 6px; color: ${program.warna || '#3b82f6'};">📋 Persyaratan:</strong>
+                        <ul style="padding-left: 0; margin-top: 5px; list-style-type: none;">
+                            ${syaratHTML}
+                        </ul>
+                    </div>
+                    ` : ''}
+                    
+                    <p style="margin-bottom: 5px; display: flex; flex-wrap: wrap;">
+                        <strong style="min-width: 80px; color: ${program.warna || '#3b82f6'};">⏱️ Durasi:</strong> 
+                        <span style="flex: 1;">${program.durasi || 'Fleksibel'}</span>
+                    </p>
+                </div>
+                
+                <div style="margin-top: 20px; padding-top: 15px; border-top: 2px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                    <a href="#contact" style="background: ${program.warna || '#3b82f6'}; color: white; padding: 8px 18px; border-radius: 25px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-info-circle"></i> Info & Pendaftaran
+                    </a>
+                    <span style="font-size: 0.85rem; color: #4b5563; background: #f3f4f6; padding: 5px 12px; border-radius: 20px;">
+                        <i class="fas fa-clock"></i> ${program.durasi || 'Fleksibel'}
+                    </span>
+                </div>
+                
+                ${program.keterangan ? `
+                <div style="margin-top: 12px; background: ${program.warna}10; padding: 8px 12px; border-radius: 8px; border-left: 4px solid ${program.warna};">
+                    <i class="fas fa-star" style="color: ${program.warna};"></i> 
+                    <span style="font-size: 0.85rem; color: #1f2937;">${program.keterangan}</span>
+                </div>
+                ` : ''}
+            `;
+            
+            facilitiesGrid.appendChild(programCard);
+        });
+        
+        // Tambahkan card informasi umum
+        const infoCard = document.createElement('div');
+        infoCard.className = 'facility-card';
+        infoCard.style.animation = 'none';
+        infoCard.innerHTML = `
+            <div class="facility-icon" style="background: #f59e0b;">
+                <i class="fas fa-info-circle"></i>
+            </div>
+            <h3 style="color: #f59e0b; margin-bottom: 15px;">Informasi Penting</h3>
+            <div style="text-align: left; font-size: 0.95rem; line-height: 1.7;">
+                <p style="margin-bottom: 12px;">
+                    <strong style="color: #f59e0b;">🏫 Penyelenggara:</strong><br>
+                    PKBM AKAR NUSA Paninggaran
+                </p>
+                <p style="margin-bottom: 12px;">
+                    <strong style="color: #f59e0b;">📋 Persyaratan Umum:</strong>
+                </p>
+                <ul style="padding-left: 0; margin-bottom: 12px; list-style-type: none;">
+                    <li style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px;"><i class="fas fa-check-circle" style="color: #f59e0b; margin-top: 3px;"></i> Foto copy ijazah terakhir</li>
+                    <li style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px;"><i class="fas fa-check-circle" style="color: #f59e0b; margin-top: 3px;"></i> Foto copy KK dan KTP</li>
+                    <li style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px;"><i class="fas fa-check-circle" style="color: #f59e0b; margin-top: 3px;"></i> Pas foto 3x4 (4 lembar)</li>
+                    <li style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px;"><i class="fas fa-check-circle" style="color: #f59e0b; margin-top: 3px;"></i> Usia minimal Paket A: 12 tahun</li>
+                </ul>
+                <p style="margin-bottom: 12px;">
+                    <strong style="color: #f59e0b;">⏰ Waktu Belajar:</strong><br>
+                    Fleksibel, disesuaikan dengan kebutuhan
+                </p>
+                <p>
+                    <strong style="color: #f59e0b;">🎓 Ijazah:</strong><br>
+                    Diakui sama dengan sekolah formal (PP No. 17/2010)
+                </p>
+            </div>
+        `;
+        facilitiesGrid.appendChild(infoCard);
+    };
+    
+    // ========== 5. EKSEKUSI ==========
+    // Hapus animasi dari style yang ada
+    setTimeout(removeFloatingAnimationsFromStyles, 50);
+    
+    // Hapus animasi dari elemen yang sudah ada
+    setTimeout(removeAnimationsFromElements, 100);
+    
+    // Jalankan update program display dengan fungsi baru
+    setTimeout(() => {
+        if (typeof window.updateUserProgramsDisplay === 'function') {
+            window.updateUserProgramsDisplay();
+        }
+    }, 150);
+    
+    // Jalankan ulang setiap kali ada perubahan
+    if (window.saveProgram) {
+        const originalSave = window.saveProgram;
+        window.saveProgram = function() {
+            const result = originalSave.apply(this, arguments);
+            setTimeout(() => {
+                if (typeof window.updateUserProgramsDisplay === 'function') {
+                    window.updateUserProgramsDisplay();
+                }
+                setTimeout(removeAnimationsFromElements, 50);
+            }, 50);
+            return result;
+        };
+    }
+    
+    if (window.toggleProgramStatus) {
+        const originalToggle = window.toggleProgramStatus;
+        window.toggleProgramStatus = function(id) {
+            const result = originalToggle.apply(this, arguments);
+            setTimeout(() => {
+                if (typeof window.updateUserProgramsDisplay === 'function') {
+                    window.updateUserProgramsDisplay();
+                }
+                setTimeout(removeAnimationsFromElements, 50);
+            }, 50);
+            return result;
+        };
+    }
+    
+    if (window.deleteProgram) {
+        const originalDelete = window.deleteProgram;
+        window.deleteProgram = function(id) {
+            const result = originalDelete.apply(this, arguments);
+            setTimeout(() => {
+                if (typeof window.updateUserProgramsDisplay === 'function') {
+                    window.updateUserProgramsDisplay();
+                }
+                setTimeout(removeAnimationsFromElements, 50);
+            }, 50);
+            return result;
+        };
+    }
+    
+    // Observer untuk menangkap elemen baru yang ditambahkan
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.addedNodes.length) {
+                mutation.addedNodes.forEach(function(node) {
+                    if (node.nodeType === 1) { // Elemen HTML
+                        if (node.classList && node.classList.contains('facility-card')) {
+                            node.style.animation = 'none';
+                        }
+                        // Cek di dalam elemen
+                        if (node.querySelectorAll) {
+                            node.querySelectorAll('.facility-card').forEach(el => {
+                                el.style.animation = 'none';
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    });
+    
+    // Mulai observasi
+    setTimeout(() => {
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    }, 200);
+    
+    console.log('✅ Efek getar pada kartu program telah dihilangkan!');
+    
+    // Jalankan lagi setiap 2 detik untuk 10 detik pertama (memastikan tidak ada getar)
+    let counter = 0;
+    const interval = setInterval(() => {
+        removeAnimationsFromElements();
+        counter++;
+        if (counter >= 5) clearInterval(interval);
+    }, 500);
+})();
+
 </script>
 </body>
 </html>
